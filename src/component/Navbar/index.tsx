@@ -6,6 +6,7 @@ import {
   XMarkIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
+import { Button } from "../../components/ui/button";
 
 const NavBar = () => {
   const isAboveMediumScreen = useMediaQuery("(min-width: 1060px)");
@@ -32,8 +33,10 @@ const NavBar = () => {
               </Link>
               <div className="flex items-center gap-4">
                 <UserCircleIcon className="h-6 w-6 bg-primary" />
-                
-                {/* <p className="bg-primary text-lg hover:text-accent">SIGN IN</p> */}
+
+                <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+                  SIGN UP
+                </Button>
               </div>
             </div>
           ) : (
@@ -70,15 +73,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-// type Props = {};
-
-// function NavBar() {
-//   return (
-//     <div className="text-red-700 w-full h-[70px] flex-row items-center justify-between ">
-//       <div>hello</div>
-//     </div>
-//   );
-// }
-
-// export default NavBar;
