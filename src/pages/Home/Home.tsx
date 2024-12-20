@@ -1,7 +1,12 @@
-import React from "react";
+import Advertisement from "@/component/Advertisement";
+import NavBar from "@/component/Navbar";
 
 type Props = {};
 
 export default function Home({}: Props) {
-  return <div>Home</div>;
+  return (
+    <div className="w-full p-8   ">
+      <Advertisement />
+    </div>
+  );
 }

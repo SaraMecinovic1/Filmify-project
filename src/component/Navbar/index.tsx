@@ -29,7 +29,7 @@ const NavBar = () => {
                   to="/films"
                   className=" text-textColor text-lg hover:text-accent"
                 >
-                  Films
+                  Movies
                 </Link>
                 <Link
                   to="/events"
@@ -71,9 +71,9 @@ const NavBar = () => {
               <XMarkIcon className="h-7 w-7 text-white" />
             </button>
           </div>
-          <div className="flex flex-col gap-10 text-2xl p-6 pl-12">
+          <div className="flex flex-col gap-10 text-xl p-6 pl-12">
             <Link to="/films" className="text-white hover:text-accent">
-              Films
+              Movies
             </Link>
             <Link to="/events" className="text-white hover:text-accent">
               Events

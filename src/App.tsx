@@ -7,13 +7,13 @@ import Events from "./pages/EventsPage/Event";
 
 function App() {
   return (
-    <div className="w-full font-inter ">
+    <div className="w-full  font-inter ">
       <NavBar />
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/films" element={<Films />} />
         <Route path="/events" element={<Events />} />
-      </Routes> */}
+      </Routes>
     </div>
   );
 }
