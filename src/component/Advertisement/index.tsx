@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -13,29 +14,29 @@ const videoFiles = [video1, video2, video3, video4, video5, video6];
 
 const Advertisement = () => {
   return (
-    <div className="w-full h-[400px] bg-red-300">
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        loop={true}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
-        navigation={true}
-      >
-        {videoFiles.map((videoSrc, index) => {
-          return (
-            <SwiperSlide key={index}>
-              <video width="100%" height="auto" autoPlay loop muted>
-                <source src={videoSrc} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    </div>
+    <Swiper
+      spaceBetween={0}
+      slidesPerView={1}
+      loop={true}
+      autoplay={{
+        delay: 5000,
+        disableOnInteraction: false,
+      }}
+      modules={[Autoplay, Pagination, Navigation]}
+      navigation={true}
+      pagination={{
+        clickable: true,
+      }}
+    >
+      {videoFiles.map((videoSrc, index) => (
+        <SwiperSlide key={index}>
+          <video className="w-full md:h-auto object-cover" autoPlay loop muted>
+            <source src={videoSrc} type="video/mp4" />
+            Vaš pregledač ne podržava video tag.
+          </video>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 

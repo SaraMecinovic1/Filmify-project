@@ -1,12 +1,13 @@
 import Advertisement from "@/component/Advertisement";
-import NavBar from "@/component/Navbar";
 
 type Props = {};
 
 export default function Home({}: Props) {
   return (
-    <div className="w-full p-8   ">
-      <Advertisement />
+    <div className="w-full px-5 mt-[90px]">
+      <div className=" w-full">
+        <Advertisement />
+      </div>
     </div>
   );
 }

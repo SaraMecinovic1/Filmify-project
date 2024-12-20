@@ -7,7 +7,7 @@ import Events from "./pages/EventsPage/Event";
 
 function App() {
   return (
-    <div className="w-full  font-inter ">
+    <div className="w-full font-inter">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />

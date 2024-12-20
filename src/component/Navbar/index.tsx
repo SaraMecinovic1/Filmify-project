@@ -14,11 +14,11 @@ const NavBar = () => {
 
   return (
     <nav>
-      <div className="bg-[#4527a0] fixed top-0 z-30 w-full h-[70px] py-4 px-10">
+      <div className="bg-[#4527a0] fixed top-0 z-30 mb-8 w-full h-[70px] py-4 px-10">
         <div className="max-w-screen-xl mx-auto flex items-center justify-between">
           {/* Logo - Left side */}
           <div className="flex items-center">
-            <Link to="/" className="text-secondary  text-4xl font-bebas mr-10">
+            <Link to="/" className="text-secondary text-4xl font-bebas mr-10">
               FILMIFY
             </Link>
 
@@ -27,13 +27,13 @@ const NavBar = () => {
               <div className="flex items-center gap-8">
                 <Link
                   to="/films"
-                  className=" text-textColor text-lg hover:text-accent"
+                  className="text-textColor text-lg hover:text-accent"
                 >
                   Movies
                 </Link>
                 <Link
                   to="/events"
-                  className=" text-textColor text-lg hover:text-accent"
+                  className="text-textColor text-lg hover:text-accent"
                 >
                   Events
                 </Link>
@@ -41,11 +41,10 @@ const NavBar = () => {
             )}
           </div>
 
-          {/* Button i ikona sa desne strane */}
           {isAboveMediumScreen && (
             <div className="flex items-center gap-4 ml-auto">
-              <Button className=" bg-secondary hover:bg-[#e95325]  text-accent ">
-                <UserCircleIcon className="h-10 w-10 " />
+              <Button className="bg-secondary hover:bg-[#e95325] text-accent">
+                <UserCircleIcon className="h-10 w-10" />
                 Sign In
               </Button>
             </div>
@@ -80,7 +79,6 @@ const NavBar = () => {
             </Link>
           </div>
 
-          {/* User icon and sign up button at the bottom of the mobile menu */}
           <div className="mt-auto p-6 flex items-center gap-4 pl-12">
             <Button className="bg-secondary hover:bg-[#e95325] text-accent">
               SIGN UP

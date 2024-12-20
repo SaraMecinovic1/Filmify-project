@@ -60,3 +60,35 @@
 body {
   @apply bg-backgrounColor;
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important;
+  font-size: 20px !important;
+  position: fixed;
+  top: 60%;
+  padding: 20px;
+  transform: translateY(-30%);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: white !important;
+  font-size: 20px !important;
+}
