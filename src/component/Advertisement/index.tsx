@@ -2,15 +2,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import video1 from "../../assets/video-advertisement/video1.mp4";
+import video2 from "../../assets/video-advertisement/video2.mp4";
+import video3 from "../../assets/video-advertisement/video3.mp4";
+import video4 from "../../assets/video-advertisement/video4.mp4";
+import video5 from "../../assets/video-advertisement/video5.mp4";
+import video6 from "../../assets/video-advertisement/video6.mp4";
 
-const videoFiles = [
-  "./assets/video-advertisement/video1.mp4",
-  "./assets/video-advertisement/video2.mp4",
-  "./assets/video-advertisement/video3.mp4",
-  "./assets/video-advertisement/video4.mp4",
-  "./assets/video-advertisement/video5.mp4",
-  "./assets/video-advertisement/video6.mp4",
-];
+const videoFiles = [video1, video2, video3, video4, video5, video6];
 
 const Advertisement = () => {
   return (
@@ -29,7 +28,7 @@ const Advertisement = () => {
           return (
             <SwiperSlide key={index}>
               <video width="100%" height="auto" autoPlay loop muted>
-                <source src={require(`${videoSrc}`)} type="video/mp4" />
+                <source src={videoSrc} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </SwiperSlide>
