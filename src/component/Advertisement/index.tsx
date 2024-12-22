@@ -30,7 +30,12 @@ const Advertisement = () => {
     >
       {videoFiles.map((videoSrc, index) => (
         <SwiperSlide key={index}>
-          <video className="w-full md:h-auto object-cover" autoPlay loop muted>
+          <video
+            className="w-full px-4 md:h-auto object-cover"
+            autoPlay
+            loop
+            muted
+          >
             <source src={videoSrc} type="video/mp4" />
             Vaš pregledač ne podržava video tag.
           </video>

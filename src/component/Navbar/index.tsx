@@ -14,11 +14,11 @@ const NavBar = () => {
 
   return (
     <nav>
-      <div className="bg-[#4527a0] fixed top-0 z-30 mb-8 w-full h-[70px] py-4 px-10">
+      <div className="bg-[#2e2e2e] fixed top-0 z-30 mb-8 w-full h-[70px] py-4 px-10">
         <div className="max-w-screen-xl mx-auto flex items-center justify-between">
           {/* Logo - Left side */}
           <div className="flex items-center">
-            <Link to="/" className="text-secondary text-4xl font-bebas mr-10">
+            <Link to="/" className="text-secondary text-4xl font-bebas  mr-10">
               FILMIFY
             </Link>
 
