@@ -4,6 +4,7 @@ import NavBar from "./component/Navbar";
 import Home from "./pages/Home/Home";
 import Films from "./pages/Films/Films";
 import Events from "./pages/EventsPage/Event";
+import Footer from "./component/Footer";
 
 function App() {
   return (
@@ -11,9 +12,10 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/films" element={<Films />} />
+        <Route path="/movies" element={<Films />} />
         <Route path="/events" element={<Events />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

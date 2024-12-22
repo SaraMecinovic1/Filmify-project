@@ -9,7 +9,7 @@ export default {
         secondary: "#f37650",
         accent: "#ffffff",
         backgrounColor: "#ede7f6",
-        textColor: "#8a8a8a ",
+        textColor: "#c9c7c7 ",
       },
     },
     fontFamily: {
