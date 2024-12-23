@@ -26,7 +26,7 @@ const NavBar = () => {
             {isAboveMediumScreen && (
               <div className="flex items-center gap-8">
                 <Link
-                  to="/films"
+                  to="/movies"
                   className="text-textColor text-lg hover:text-accent"
                 >
                   Movies
@@ -64,14 +64,14 @@ const NavBar = () => {
 
       {/* Mobile Menu */}
       {!isAboveMediumScreen && isMenuToggled && (
-        <div className="fixed right-0 bottom-0 z-40 h-full w-[250px] bg-[#4527a0] drop-shadow-xl">
+        <div className="fixed right-0 bottom-0 z-40 h-full w-[250px] bg-[#2e2e2e] drop-shadow-xl">
           <div className="flex justify-end p-6">
             <button onClick={() => setIsMenuToggled(false)}>
               <XMarkIcon className="h-7 w-7 text-white" />
             </button>
           </div>
           <div className="flex flex-col gap-10 text-xl p-6 pl-12">
-            <Link to="/films" className="text-white hover:text-accent">
+            <Link to="/movies" className="text-white hover:text-accent">
               Movies
             </Link>
             <Link to="/events" className="text-white hover:text-accent">

@@ -2,10 +2,12 @@ import { fetchPopularMovies, Movie } from "@/services/tmdb";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import Loader from "../loading";
+import { useNavigate } from "react-router-dom";
 
 function PopularMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,6 +35,7 @@ function PopularMovies() {
           {movies.map((movie) => (
             <div
               key={movie.id}
+              onClick={() => navigate(`/movie/${movie.id}`)}
               className="shadow-lg rounded-md overflow-hidden flex flex-col"
             >
               <img
