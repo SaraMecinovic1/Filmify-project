@@ -21,15 +21,39 @@ function DetailsMovie() {
 
   return (
     <div className="w-full h-auto text-accent">
-      <div className="w-full  h-auto p-5 mt-10 lg:p-10 sm:p-5">
-        <div className="flex flex-col p-5 sm:p-5 mt-10 lg:flex-row gap-5  lg:mt-30 items-center md:items-center">
+      <div className="w-full h-auto  mt-20 lg:p-10 sm:p-5">
+        <div
+          className="
+           items-center
+        flex flex-col gap-5 pt-5
+        sm:p-5 
+        sm:mt-5
+        md:flex-row md:gap-2 md:items-start md:mt-10
+        lg:mt-0"
+        >
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            className="w-[380px] h-[550px] lg:w-[370px] lg:h-[450px] sm:w-[400px] sm:h-[550px] object-cover"
+            className="
+         
+          w-[330px] h-[440px]
+          sm:w-[400px] sm:h-[550px]  sm:ml-[37px]
+          md:w-[400px] md:h-[550px] 
+          lg:w-[400px] lg:h-[550px]
+          object-cover"
             alt={movie.title}
           />
 
-          <div className="flex flex-col justify-normal mt-3 sm:p-10 lg:p-10">
+          <div
+            className="
+          ml-10
+          flex flex-col justify-start gap-1
+          md:gap-1
+          md:items-start
+          sm:px-5 lg:px-5 
+          sm:py-0 lg:py-0 
+          sm:items-center
+        "
+          >
             <h1 className="text-3xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">
               {movie.title.toUpperCase()}
             </h1>
@@ -37,7 +61,7 @@ function DetailsMovie() {
               2h 30m
             </h2>
 
-            <p className="flex mt-2 text-md sm:text-[15px] md:justify-start">
+            <p className="flex mt-2 text-md sm:text-[15px]">
               <HeartIcon
                 fontSize={20}
                 width={24}
@@ -47,7 +71,13 @@ function DetailsMovie() {
               ADD TO WATCH LIST
             </p>
 
-            <div className="w-full text-lg  sm:w-[400px] lg:w-[500px] h-auto mt-5 sm:mt-7">
+            <div
+              className="
+            text-lg w-full pr-5
+            sm:w-full lg:w-[500px] 
+            md:w-full md:text-left md:ml-0 md:mt-5
+            h-auto mt-4 sm:mt-3 sm:text-center sm:ml-5"
+            >
               {movie.overview}
             </div>
           </div>
