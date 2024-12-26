@@ -6,18 +6,24 @@ import Films from "./pages/Films/Films";
 import Events from "./pages/EventsPage/Event";
 import Footer from "./component/Footer";
 import DetailsMovie from "./pages/DetailsPage/DetailsMovie";
+import { useState } from "react";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="w-full font-inter">
-      <NavBar />
+      {!isLoading && <NavBar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/movies" element={<Films />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/movie/:id" element={<DetailsMovie />} />
+        <Route
+          path="/movie/:id"
+          element={<DetailsMovie setIsLoading={setIsLoading} />}
+        />
       </Routes>
-      <Footer />
+      {!isLoading && <Footer />}
     </div>
   );
 }

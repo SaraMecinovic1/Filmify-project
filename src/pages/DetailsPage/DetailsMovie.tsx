@@ -1,58 +1,86 @@
+import Loader from "@/component/loading";
+import { Button } from "@/components/ui/button";
 import { fetchMovieDetails, Movie } from "@/services/tmdb";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { FiHeart } from "react-icons/fi";
+import { FaRegHeart } from "react-icons/fa";
+import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function DetailsMovie() {
+function DetailsMovie({
+  setIsLoading,
+}: {
+  setIsLoading: (loading: boolean) => void;
+}) {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [isInWatchList, setIsInWatchList] = useState(false);
+
+  const toggleWatchList = () => {
+    setIsInWatchList(!isInWatchList);
+    console.log(isInWatchList);
+  };
 
   useEffect(() => {
     const getMovieDetails = async () => {
-      const detailsMovie = await fetchMovieDetails(Number(id));
-      setMovie(detailsMovie);
+      setIsLoading(true);
+      try {
+        const detailsMovie = await fetchMovieDetails(Number(id));
+        setMovie(detailsMovie);
+      } catch (error) {
+        console.error("Failed to fetch movie details:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     getMovieDetails();
-  }, [id]);
+  }, [id, setIsLoading]);
 
   if (!movie) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <div className="w-full h-auto text-accent">
-      <div className="w-full h-auto  mt-20 lg:p-10 sm:p-5">
+      <div className="w-full h-auto mt-20 lg:p-10 sm:p-5">
         <div
           className="
-           items-center
-        flex flex-col gap-5 pt-5
-        sm:p-5 
-        sm:mt-5
-        md:flex-row md:gap-2 md:items-start md:mt-10
-        lg:mt-0"
+            items-center
+            flex flex-col gap-5 pt-5
+            sm:p-5
+            sm:mt-5
+            md:flex-row md:gap-2 md:items-start md:mt-10
+            lg:mt-0
+          "
         >
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             className="
-         
-          w-[330px] h-[440px]
-          sm:w-[400px] sm:h-[550px]  sm:ml-[37px]
-          md:w-[400px] md:h-[550px] 
-          lg:w-[400px] lg:h-[550px]
-          object-cover"
+              rounded-lg border
+              w-[330px] h-[440px]
+              sm:w-[400px] sm:h-[550px] sm:ml-[37px]
+              md:w-[400px] md:h-[550px]
+              lg:w-[400px] lg:h-[550px]
+              object-cover
+            "
             alt={movie.title}
           />
 
           <div
             className="
-          ml-10
-          flex flex-col justify-start gap-1
-          md:gap-1
-          md:items-start
-          sm:px-5 lg:px-5 
-          sm:py-0 lg:py-0 
-          sm:items-center
-        "
+              flex flex-col justify-center gap-1
+              md:gap-1
+              md:items-start
+              md:mx-5
+              sm:px-5 lg:px-5
+              sm:py-0 lg:py-0
+              items-center sm:items-center
+            "
           >
             <h1 className="text-3xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">
               {movie.title.toUpperCase()}
@@ -62,23 +90,45 @@ function DetailsMovie() {
             </h2>
 
             <p className="flex mt-2 text-md sm:text-[15px]">
-              <HeartIcon
-                fontSize={20}
-                width={24}
-                height={24}
-                className="text-secondary mr-1"
-              />
+              {isInWatchList ? (
+                <FiHeart
+                  onClick={toggleWatchList}
+                  fontSize={20}
+                  width={24}
+                  height={24}
+                  className="text-secondary mr-1"
+                />
+              ) : (
+                <FaRegHeart
+                  onClick={toggleWatchList}
+                  fontSize={20}
+                  width={24}
+                  height={24}
+                  className="text-secondary mr-1"
+                />
+              )}
               ADD TO WATCH LIST
             </p>
 
             <div
               className="
-            text-lg w-full pr-5
-            sm:w-full lg:w-[500px] 
-            md:w-full md:text-left md:ml-0 md:mt-5
-            h-auto mt-4 sm:mt-3 sm:text-center sm:ml-5"
+                px-5
+                mb-5
+                text-lg w-full
+                sm:w-full lg:w-[500px]
+                md:w-full
+                h-auto mt-4 sm:mt-3 md:mt-3
+                text-center md:text-left md:px-0
+              "
             >
               {movie.overview}
+            </div>
+
+            <div className="mb-10">
+              <Button variant="secondary">
+                MAKE RESERVATION
+                <CalendarDaysIcon />
+              </Button>
             </div>
           </div>
         </div>
