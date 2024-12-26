@@ -2,7 +2,8 @@ import Loader from "@/component/loading";
 import { Button } from "@/components/ui/button";
 import { fetchMovieDetails, Movie } from "@/services/tmdb";
 import { FiHeart } from "react-icons/fi";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+
 import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,12 +13,13 @@ function DetailsMovie({
 }: {
   setIsLoading: (loading: boolean) => void;
 }) {
+    
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [isInWatchList, setIsInWatchList] = useState(false);
+  const [isInWatchList, setIsInWatchList] = useState(true);
 
   const toggleWatchList = () => {
-    setIsInWatchList(!isInWatchList);
+    setIsInWatchList((prev) => !prev);
     console.log(isInWatchList);
   };
 
@@ -99,7 +101,7 @@ function DetailsMovie({
                   className="text-secondary mr-1"
                 />
               ) : (
-                <FaRegHeart
+                <FaHeart
                   onClick={toggleWatchList}
                   fontSize={20}
                   width={24}
