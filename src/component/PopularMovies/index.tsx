@@ -1,18 +1,16 @@
 import { fetchPopularMovies, Movie } from "@/services/tmdb";
-import { StarIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import Loader from "../loading";
-import { useNavigate } from "react-router-dom";
+import MovieCard from "../MovieCard";
 
 function PopularMovies() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
     const getPopularMovies = async () => {
-      const popularMovies = await fetchPopularMovies(1);
+      const popularMovies = await fetchPopularMovies();
       setMovies(popularMovies);
       setIsLoading(false);
     };
@@ -33,29 +31,13 @@ function PopularMovies() {
       {!isLoading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4">
           {movies.map((movie) => (
-            <div
+            <MovieCard
               key={movie.id}
-              onClick={() => navigate(`/movie/${movie.id}`)}
-              className="shadow-lg rounded-md overflow-hidden flex flex-col"
-            >
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="w-full h-auto"
-              />
-              <div className="p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                <h3 className="text-sm font-medium text-[#c9c7c7] mr-4 line-clamp-2">
-                  {movie.title.toUpperCase()}
-                </h3>
-                <p className="flex items-center text-sm mt-2 sm:mt-0 text-[#c9c7c7]">
-                  <StarIcon
-                    width={17}
-                    className="text-yellow-600 mb-0.5 mr-1"
-                  />
-                  {movie.vote_average.toFixed(1)}
-                </p>
-              </div>
-            </div>
+              id={movie.id}
+              title={movie.title}
+              posterPath={movie.poster_path}
+              voteAverage={movie.vote_average}
+            />
           ))}
         </div>
       ) : (

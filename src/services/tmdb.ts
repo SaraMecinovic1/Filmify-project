@@ -11,21 +11,20 @@ export interface Movie {
   vote_average: number;
   vote_count: number;
 }
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNTIzZTg2YTJiMDk3OGU2ZmE4YjVlZWIzZWZlYzY3ZCIsIm5iZiI6MTczNDY5NTk0Mi42MzYsInN1YiI6IjY3NjU1YzA2YjY3ZTQ1NDcyNTVkZjQ0MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oJUGwtAa7g44jaY-Ojezh7bBQFT-TVddfWfgEksczb0",
+  },
+};
 
-export const fetchPopularMovies = async (
-  page: number = 1
-): Promise<Movie[]> => {
+export const fetchPopularMovies = async () => {
   try {
     const response = await fetch(
       "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNTIzZTg2YTJiMDk3OGU2ZmE4YjVlZWIzZWZlYzY3ZCIsIm5iZiI6MTczNDY5NTk0Mi42MzYsInN1YiI6IjY3NjU1YzA2YjY3ZTQ1NDcyNTVkZjQ0MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oJUGwtAa7g44jaY-Ojezh7bBQFT-TVddfWfgEksczb0",
-        },
-      }
+      options
     );
     if (!response.ok) {
       throw new Error(
@@ -65,5 +64,25 @@ export const fetchMovieDetails = async (movieId: number): Promise<Movie> => {
   } catch (error) {
     console.error("Error fetching movie details:", error);
     throw error;
+  }
+};
+
+export const fetchNowPlayingMovies = async () => {
+  try {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1",
+      options
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP error! FetchPopularMovies status: ${response.status}`
+      );
+    }
+    const data = await response.json();
+    return data.results as Movie[];
+  } catch (error) {
+    console.error("Error fetching popular movies:", error);
+    return [];
   }
 };
