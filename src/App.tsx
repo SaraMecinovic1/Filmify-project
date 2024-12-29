@@ -16,7 +16,10 @@ function App() {
       {!isLoading && <NavBar />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
+        <Route
+          path="/movies"
+          element={<Movies setIsLoading={setIsLoading} />}
+        />
         <Route path="/events" element={<Events />} />
         <Route
           path="/movie/:id"
