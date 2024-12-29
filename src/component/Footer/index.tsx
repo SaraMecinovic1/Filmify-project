@@ -27,10 +27,10 @@ function Footer() {
           Movies
         </Link>
         <Link
-          to="/events"
+          to="/upcoming"
           className="text-textColor block  hover:text-secondary cursor-pointer"
         >
-          Events
+         Upcoming
         </Link>
         <Link
           to="/contactus"

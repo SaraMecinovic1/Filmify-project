@@ -32,10 +32,10 @@ const NavBar = () => {
                   Movies
                 </Link>
                 <Link
-                  to="/events"
+                  to="/upcoming"
                   className="text-textColor text-lg hover:text-accent"
                 >
-                  Events
+                  Upcoming
                 </Link>
               </div>
             )}
@@ -74,8 +74,8 @@ const NavBar = () => {
             <Link to="/movies" className="text-white hover:text-accent">
               Movies
             </Link>
-            <Link to="/events" className="text-white hover:text-accent">
-              Events
+            <Link to="/upcoming" className="text-white hover:text-accent">
+              Upcoming
             </Link>
           </div>
 

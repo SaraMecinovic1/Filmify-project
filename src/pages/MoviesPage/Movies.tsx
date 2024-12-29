@@ -18,7 +18,7 @@ export default function Movies({
       setIsLoading(false);
     };
     getNowPlayingMovies();
-  }, []);
+  }, [setIsLoading]);
 
   if (nowPlayingMovies.length === 0) {
     return (
