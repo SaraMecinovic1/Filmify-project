@@ -1,36 +1,29 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Routes, Route } from "react-router-dom";
-import "./index.css";
 import NavBar from "./component/Navbar";
-import Home from "./pages/HomePage/Home";
 import Footer from "./component/Footer";
-import DetailsMovie from "./pages/DetailsPage/DetailsMovie";
-import { useState } from "react";
+import Home from "./pages/HomePage/Home";
 import Movies from "./pages/MoviesPage/Movies";
 import Upcoming from "./pages/UpcomingPage/Upcoming";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import DetailsMovie from "./pages/DetailsPage/DetailsMovie";
 
 const queryClient = new QueryClient();
-function App() {
-  const [isLoading, setIsLoading] = useState(false);
 
+function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="w-full font-inter">
-        {!isLoading && <NavBar />}
+        <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/movies"
-            element={<Movies setIsLoading={setIsLoading} />}
-          />
+          <Route path="/movies" element={<Movies />} />
           <Route path="/upcoming" element={<Upcoming />} />
-          <Route
-            path="/movie/:id"
-            element={<DetailsMovie setIsLoading={setIsLoading} />}
-          />
+          <Route path="/movie/:id" element={<DetailsMovie />} />
         </Routes>
-        {!isLoading && <Footer />}
+        <Footer />
       </div>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

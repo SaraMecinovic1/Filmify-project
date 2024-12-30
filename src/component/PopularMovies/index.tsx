@@ -1,21 +1,25 @@
 import { fetchPopularMovies, Movie } from "@/services/tmdb";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Loader from "../loading";
 import MovieCard from "../MovieCard";
 
 function PopularMovies() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["popularMovies"],
+    queryFn: fetchPopularMovies,
+  });
 
-  useEffect(() => {
-    setIsLoading(true);
-    const getPopularMovies = async () => {
-      const popularMovies = await fetchPopularMovies();
-      setMovies(popularMovies);
-      setIsLoading(false);
-    };
-    getPopularMovies();
-  }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500">
+        Greška pri učitavanju popularnih filmova. Pokušajte ponovo kasnije.
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-auto mt-7">
@@ -27,22 +31,17 @@ function PopularMovies() {
           Check out the movies we recommend, specially selected for you.
         </p>
       </div>
-
-      {!isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              posterPath={movie.poster_path}
-              voteAverage={movie.vote_average}
-            />
-          ))}
-        </div>
-      ) : (
-        <Loader />
-      )}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-10 px-4">
+        {data?.slice(0, 6).map((movie: Movie) => (
+          <MovieCard
+            key={movie.id}
+            id={movie.id}
+            title={movie.title}
+            posterPath={movie.poster_path}
+            voteAverage={movie.vote_average}
+          />
+        ))}
+      </div>
     </div>
   );
 }

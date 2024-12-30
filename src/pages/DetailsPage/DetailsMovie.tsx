@@ -1,48 +1,41 @@
 import Loader from "@/component/loading";
 import { Button } from "@/components/ui/button";
-import { fetchMovieDetails, Movie } from "@/services/tmdb";
+import { fetchMovieDetails } from "@/services/tmdb";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-
 import { CalendarDaysIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
-function DetailsMovie({
-  setIsLoading,
-}: {
-  setIsLoading: (loading: boolean) => void;
-}) {
-    
+export default function DetailsMovie() {
   const { id } = useParams<{ id: string }>();
-  const [movie, setMovie] = useState<Movie | null>(null);
-  const [isInWatchList, setIsInWatchList] = useState(true);
+  const [isInWatchList, setIsInWatchList] = useState(false);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["movieDetails", id],
+    queryFn: () => fetchMovieDetails(id),
+  });
 
   const toggleWatchList = () => {
     setIsInWatchList((prev) => !prev);
-    console.log(isInWatchList);
+    console.log("Watchlist status:", isInWatchList);
   };
 
-  useEffect(() => {
-    const getMovieDetails = async () => {
-      setIsLoading(true);
-      try {
-        const detailsMovie = await fetchMovieDetails(Number(id));
-        setMovie(detailsMovie);
-      } catch (error) {
-        console.error("Failed to fetch movie details:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getMovieDetails();
-  }, [id, setIsLoading]);
-
-  if (!movie) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Loader />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-red-500">
+          Failed to load movie details. Please try again later.
+        </p>
       </div>
     );
   }
@@ -60,8 +53,9 @@ function DetailsMovie({
             lg:mt-0
           "
         >
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        <img
+            src={https://image.tmdb.org/t/p/w500${movie.poster_path}}
+              alt={data?.title}
             className="
               rounded-lg border
               w-[330px] h-[440px]
@@ -70,10 +64,10 @@ function DetailsMovie({
               lg:w-[400px] lg:h-[550px]
               object-cover
             "
-            alt={movie.title}
+            alt={data?.title}
           />
 
-          <div
+<div
             className="
               flex flex-col justify-center gap-1
               md:gap-1
@@ -83,9 +77,9 @@ function DetailsMovie({
               sm:py-0 lg:py-0
               items-center sm:items-center
             "
-          >
-            <h1 className="text-3xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">
-              {movie.title.toUpperCase()}
+          >         
+          <h1 className="text-3xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">
+              {data?.title.toUpperCase()}
             </h1>
             <h2 className="text-xl sm:text-xl lg:text-2xl font-normal text-accent">
               2h 30m
@@ -99,20 +93,19 @@ function DetailsMovie({
                   width={24}
                   height={24}
                   className="text-secondary mr-1"
-                />
-              ) : (
-                <FaHeart
-                  onClick={toggleWatchList}
-                  fontSize={20}
-                  width={24}
-                  height={24}
-                  className="text-secondary mr-1"
-                />
-              )}
-              ADD TO WATCH LIST
-            </p>
+                />) : (
+                  <FaHeart
+                    onClick={toggleWatchList}
+                    fontSize={20}
+                    width={24}
+                    height={24}
+                    className="text-secondary mr-1"
+                  />
+                )}
+                ADD TO WATCH LIST
+              </p>
 
-            <div
+              <div
               className="
                 px-5
                 mb-5
@@ -123,9 +116,8 @@ function DetailsMovie({
                 text-center md:text-left md:px-0
               "
             >
-              {movie.overview}
+              {data?.overview}
             </div>
-
             <div className="mb-10">
               <Button variant="secondary">
                 MAKE RESERVATION
@@ -139,4 +131,4 @@ function DetailsMovie({
   );
 }
 
-export default DetailsMovie;
+}

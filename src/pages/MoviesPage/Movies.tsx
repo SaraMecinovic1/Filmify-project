@@ -1,42 +1,35 @@
 import Loader from "@/component/loading";
 import MovieCard from "@/component/MovieCard";
-import { fetchNowPlayingMovies, Movie } from "@/services/tmdb";
-import { useEffect, useState } from "react";
+import { fetchNowPlayingMovies } from "@/services/tmdb";
+import { useQuery } from "@tanstack/react-query";
 
-export default function Movies({
-  setIsLoading,
-}: {
-  setIsLoading: (loading: boolean) => void;
-}) {
-  const [nowPlayingMovies, setNowPlayingMovies] = useState<Movie[]>([]);
+export default function Movies() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["fetchNowPlayingMovies"],
+    queryFn: fetchNowPlayingMovies,
+  });
 
-  useEffect(() => {
-    const getNowPlayingMovies = async () => {
-      setIsLoading(true);
-      const nowPlayingMovies = await fetchNowPlayingMovies();
-      setNowPlayingMovies(nowPlayingMovies);
-      setIsLoading(false);
-    };
-    getNowPlayingMovies();
-  }, [setIsLoading]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  if (nowPlayingMovies.length === 0) {
+  if (isError) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Loader />
+      <div className="text-center text-red-500">
+        Greška pri učitavanju popularnih filmova. Pokušajte ponovo kasnije.
       </div>
     );
   }
 
   return (
-    <div className=" w-full min-h-screen px-5 mt-[110px]">
-      <div className=" text-center text-4xl font-bold font-inter text-[#cfcccc] ">
+    <div className="w-full min-h-screen px-5 mt-[110px]">
+      <div className="text-center text-4xl font-bold font-inter text-[#cfcccc]">
         <h1>CURRENTLY IN CINEMAS</h1>
       </div>
 
       <div className="w-full h-auto px-10 mt-10">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 ">
-          {nowPlayingMovies.map((movie) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {data?.map((movie) => (
             <MovieCard
               key={movie.id}
               id={movie.id}
