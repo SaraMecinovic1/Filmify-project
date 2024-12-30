@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function DetailsMovie() {
   const { id } = useParams<{ id: string }>();
-  const [isInWatchList, setIsInWatchList] = useState(false);
+  const [isInWatchList, setIsInWatchList] = useState(true);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["movieDetails", id],

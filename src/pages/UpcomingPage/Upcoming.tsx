@@ -17,7 +17,7 @@ export default function Upcoming() {
   if (isError) {
     return (
       <div className="text-center text-red-500">
-        Greška pri učitavanju nadolazećih filmova. Pokušajte ponovo kasnije.
+        Failed to load movie details. Please try again later.{" "}
       </div>
     );
   }

@@ -16,7 +16,7 @@ export default function Movies() {
   if (isError) {
     return (
       <div className="text-center text-red-500">
-        Greška pri učitavanju popularnih filmova. Pokušajte ponovo kasnije.
+        Failed to load movie details. Please try again later.{" "}
       </div>
     );
   }

@@ -30,10 +30,10 @@ function Footer() {
           to="/upcoming"
           className="text-textColor block  hover:text-secondary cursor-pointer"
         >
-         Upcoming
+          Upcoming
         </Link>
         <Link
-          to="/contactus"
+          to="#"
           className="text-textColor block  hover:text-secondary cursor-pointer"
         >
           About Us
