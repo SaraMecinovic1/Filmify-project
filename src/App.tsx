@@ -7,6 +7,7 @@ import Home from "./pages/HomePage/Home";
 import Movies from "./pages/MoviesPage/Movies";
 import Upcoming from "./pages/UpcomingPage/Upcoming";
 import DetailsMovie from "./pages/DetailsPage/DetailsMovie";
+import SignUp from "./pages/SignUpPage";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/movies" element={<Movies />} />
           <Route path="/upcoming" element={<Upcoming />} />
           <Route path="/movie/:id" element={<DetailsMovie />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
         <Footer />
       </div>
