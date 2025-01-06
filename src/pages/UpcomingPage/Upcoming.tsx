@@ -29,7 +29,7 @@ export default function Upcoming() {
       </div>
       <div className="w-full h-auto px-10 mt-10">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {data?.map((movie) => (
+          {data?.slice(0, 12).map((movie) => (
             <MovieCard
               key={movie.id}
               id={movie.id}
