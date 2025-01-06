@@ -12,35 +12,34 @@ import {
 } from "@/components/ui/popover";
 
 export function DateOfBirthPicker() {
-  // Ispravljeno ime komponente
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateSelect = (date: Date) => {
-    setSelectedDate(date); // Ažuriraj izabrani datum
-    console.log("Selected Date of Birth:", date); // Možete ga proslediti dalje, npr. u state ili formu
+    setSelectedDate(date);
+    console.log("Selected Date of Birth:", date);
   };
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center bg-[#191919] text-accent">
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant={"outline"}
-            className="w-[270px] rounded-2xl  text-left font-normal pl-5"
+            className="w-[270px] rounded-2xl text-left font-normal pl-5 mt-2 text-accent"
           >
             {selectedDate ? (
-              format(selectedDate, "PPP") // Formatiran datum
+              format(selectedDate, "PPP") // Prikazuje izabrani datum u accent boji
             ) : (
-              <span>Pick a date of birth</span> // Ako datum nije izabran
+              <span className="text-accent">Pick a date of birth</span> // Placeholder u accent boji
             )}
-            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-accent" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto p-0 bg-[#191919] text-accent" align="start">
           <Calendar
             mode="single"
             selected={selectedDate}
-            onSelect={handleDateSelect} // Povežite onSelect sa funkcijom
+            onSelect={handleDateSelect}
             disabled={(date) =>
               date > new Date() || date < new Date("1900-01-01")
             }

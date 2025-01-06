@@ -1,6 +1,7 @@
 import React from "react";
 import CinemaPic from "../../assets/cinema.jpg";
 import Inputs from "@/component/InputsCard";
+import { Button } from "@/components/ui/button";
 
 type Props = {};
 
@@ -14,7 +15,12 @@ function SignUp({}: Props) {
         <h1 className="text-accent text-2xl font-bold font-inter mb-2 ">
           SIGN UP
         </h1>
-        <Inputs />
+        <div className="w-full h-[60vh] pt-10 bg-[#191919] bg-opacity-90 rounded-lg ">
+          <Inputs />
+          <Button variant="secondary" className="mt-5 rounded-2xl w-[200px] text-accent">
+            CREATE ACCOUNT
+          </Button>
+        </div>
       </div>
     </div>
   );

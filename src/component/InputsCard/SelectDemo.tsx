@@ -11,14 +11,18 @@ import {
 export function SelectDemo() {
   return (
     <Select>
-      <SelectTrigger className="w-[270px] rounded-2xl pl-5">
-        <SelectValue placeholder="select gender" />
+      <SelectTrigger className="w-[270px] rounded-2xl pl-5 mt-2 text-accent placeholder:text-accent">
+        <SelectValue placeholder="Select gender" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-[#191919]">
         <SelectGroup>
-          <SelectLabel>Gender</SelectLabel>
-          <SelectItem value="apple">Female</SelectItem>
-          <SelectItem value="banana">Male</SelectItem>
+          <SelectLabel className="text-accent">Gender</SelectLabel>
+          <SelectItem value="female" className="text-accent">
+            Female
+          </SelectItem>
+          <SelectItem value="male" className="text-accent">
+            Male
+          </SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

@@ -1,53 +1,62 @@
 import { Input } from "@/components/ui/input";
 import { DateOfBirthPicker } from "./CalendarForBirthday";
 import { SelectDemo } from "./SelectDemo";
+import { Button } from "@/components/ui/button";
 
 type Props = {};
 
 function Inputs({}: Props) {
   return (
-    <div className="w-full h-full bg-[#191919] bg-opacity-90 rounded-md grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
-      <div className="flex flex-col space-y-2">
-        <p htmlFor="name" className="text-left pl-3 text-sm font-medium">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 p-4">
+      <div>
+        <p className="text-left pl-3 text-sm font-medium text-textColor">
           Name
         </p>
-        <Input className="w-full rounded-2xl pl-5" type="text" id="name" />
+        <Input className="w-full rounded-2xl pl-5 mt-2" type="text" id="name" />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <p htmlFor="lastname" className="text-left pl-3 text-sm font-medium">
+      <div>
+        <p className="text-left pl-3 text-sm font-medium  text-textColor">
           Lastname
         </p>
-        <Input className="w-full rounded-2xl pl-5" type="text" id="lastname" />
+        <Input
+          className="w-full rounded-2xl pl-5 mt-2 "
+          type="text"
+          id="lastname"
+        />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <p htmlFor="date" className="text-left pl-3 text-sm font-medium">
+      <div>
+        <p className="text-left pl-3 text-sm font-medium  text-textColor">
           Date of birth
         </p>
         <DateOfBirthPicker />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <p htmlFor="gender" className="text-left pl-3 text-sm font-medium">
+      <div>
+        <p className="text-left pl-3 text-sm font-medium  text-textColor">
           Gender
         </p>
         <SelectDemo />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <p htmlFor="email" className="text-left pl-3 text-sm font-medium">
+      <div>
+        <p className="text-left pl-3 text-sm font-medium  text-textColor">
           Email
         </p>
-        <Input className="w-full rounded-2xl pl-5" type="email" id="email" />
+        <Input
+          className="w-full rounded-2xl pl-5 mt-2"
+          type="email"
+          id="email"
+        />
       </div>
 
-      <div className="flex flex-col space-y-2">
-        <p htmlFor="password" className="text-left pl-3 text-sm font-medium">
+      <div>
+        <p className="text-left pl-3 text-sm font-medium  text-textColor">
           Password
         </p>
         <Input
-          className="w-full rounded-2xl pl-5"
+          className="w-full rounded-2xl pl-5 mt-2"
           type="password"
           id="password"
         />
