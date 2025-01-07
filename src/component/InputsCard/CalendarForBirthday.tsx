@@ -12,11 +12,13 @@ import {
 } from "@/components/ui/popover";
 
 export function DateOfBirthPicker() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
-  const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
-    console.log("Selected Date of Birth:", date);
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      setSelectedDate(date);
+      console.log("Selected Date of Birth:", date);
+    }
   };
 
   return (
@@ -25,7 +27,7 @@ export function DateOfBirthPicker() {
         <PopoverTrigger asChild>
           <Button
             variant={"outline"}
-            className="w-[270px] rounded-2xl text-left font-normal pl-5 mt-2 text-accent"
+            className="w-[270px] rounded-2xl text-left font-normal pl-5 mt-2 text-accent hover:bg-transparent"
           >
             {selectedDate ? (
               format(selectedDate, "PPP") // Prikazuje izabrani datum u accent boji
@@ -35,7 +37,10 @@ export function DateOfBirthPicker() {
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-accent" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 bg-[#191919] text-accent" align="start">
+        <PopoverContent
+          className="w-auto p-0 bg-[#191919] text-accent"
+          align="start"
+        >
           <Calendar
             mode="single"
             selected={selectedDate}

@@ -15,9 +15,9 @@ function SignUp({}: Props) {
         <h1 className="text-accent text-2xl font-bold font-inter mb-2 ">
           SIGN UP
         </h1>
-        <div className="w-full h-[60vh] pt-10 bg-[#191919] bg-opacity-90 rounded-lg ">
+        <div className="w-full h-auto sm:h-auto pt-10 bg-[#191919] bg-opacity-90 rounded-lg flex items-center flex-col justify-center ">
           <Inputs />
-          <Button variant="secondary" className="mt-5 rounded-2xl w-[200px] text-accent">
+          <Button variant="secondary" className="mt-5 mb-10  rounded-2xl w-[200px] text-accent">
             CREATE ACCOUNT
           </Button>
         </div>
