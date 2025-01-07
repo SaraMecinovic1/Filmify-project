@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Bars4Icon,
   XMarkIcon,
@@ -11,6 +11,7 @@ import { Button } from "../../components/ui/button";
 const NavBar = () => {
   const isAboveMediumScreen = useMediaQuery("(min-width: 1060px)");
   const [isMenuToggled, setIsMenuToggled] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav>
@@ -43,7 +44,10 @@ const NavBar = () => {
 
           {isAboveMediumScreen && (
             <div className="flex items-center gap-4 ml-auto">
-              <Button className="bg-secondary hover:bg-[#e95325] text-accent">
+              <Button
+                onClick={() => navigate("/signup")}
+                className="bg-secondary hover:bg-[#e95325] text-accent"
+              >
                 <UserCircleIcon className="h-10 w-10" />
                 Sign In
               </Button>
@@ -80,7 +84,10 @@ const NavBar = () => {
           </div>
 
           <div className="mt-auto p-6 flex items-center gap-4 pl-12">
-            <Button className="bg-secondary hover:bg-[#e95325] text-accent">
+            <Button
+              onClick={() => navigate("/signup")}
+              className="bg-secondary hover:bg-[#e95325] text-accent"
+            >
               SIGN UP
               <UserCircleIcon />
             </Button>

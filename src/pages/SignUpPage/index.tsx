@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUp } from "../../services/supabaseServices";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   name: z
@@ -23,9 +24,10 @@ const formSchema = z.object({
 });
 
 function SignUp() {
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
-    register,
+    register, // omogućava povezivanje inputa sa formom
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -35,6 +37,8 @@ function SignUp() {
   const onSubmit = async (data: any) => {
     setIsSubmitting(true);
     const { email, password, name, lastname, birthDate, gender } = data;
+
+    // Calling signUp function with the correct data
     const signUpError = await signUp(email, password, {
       name,
       lastname,
@@ -54,21 +58,28 @@ function SignUp() {
       className="w-full h-[100vh] bg-cover bg-center flex justify-center pt-[100px]"
       style={{ backgroundImage: `url(${CinemaPic})` }}
     >
-      <div className="w-[650px] h-full p-7 text-center ">
-        <h1 className="text-accent text-2xl font-bold font-inter mb-2 ">
+      <div className="w-[650px] h-full p-7 text-center">
+        <h1 className="text-accent text-2xl font-bold font-inter mb-2">
           SIGN UP
         </h1>
-        <div className="w-full h-auto sm:h-auto pt-10 bg-[#191919] bg-opacity-90 rounded-lg flex items-center flex-col justify-center ">
+        <div className="w-full h-auto sm:h-auto pt-10 bg-[#191919] bg-opacity-90 rounded-lg flex items-center flex-col justify-center">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <Inputs register={register} errors={errors} />
             <Button
               type="submit"
               variant="secondary"
-              className="mt-5 mb-10 rounded-2xl w-[200px] text-accent"
+              className="mt-5 mb-2 rounded-2xl w-[200px] text-accent"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Creating Account..." : "CREATE ACCOUNT"}
             </Button>
+            <p
+              onClick={() => navigate("/login")}
+              className="font-medium text-[12px] pr-5 mb-3 text-accent hover:text-red-500 text-right"
+            >
+              {" "}
+              I ALREADY HAVE ACCOUNT
+            </p>
           </form>
         </div>
       </div>

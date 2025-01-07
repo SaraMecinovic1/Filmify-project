@@ -29,17 +29,17 @@ export const signUp = async (
     password,
     options: {
       data: {
-        ...userData, // Prosleđivanje svih podataka korisnika
+        ...userData,
       },
     },
   });
 
   if (error) {
-    console.log("Greška u signUp funkciji:", error.message);
-    return error.message; // Vratiti poruku greške za povratnu informaciju
+    console.log("Error in signUp function:", error.message);
+    return error.message;
   }
 
-  console.log("Korisnik uspešno registrovan:", data);
+  console.log("User successfully signed up:", data);
   return data;
 };
 
