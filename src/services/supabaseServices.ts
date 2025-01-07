@@ -1,9 +1,10 @@
 import supabase from "@/config/supabase";
+import { string } from "zod";
 
 export const logIn = async () => {
   const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+    email: string,
+    password: string,
   });
 
   if (error) {
@@ -13,24 +14,33 @@ export const logIn = async () => {
   return null;
 };
 
-export const signUp = async () => {
+export const signUp = async (
+  email: string,
+  password: string,
+  userData: {
+    name: string;
+    lastname: string;
+    birthDate: number;
+    gender: string;
+  }
+) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
-        city: String,
-        phone: Number,
-        birthDate: Number,
-        gender: String,
+        ...userData, // Prosleđivanje svih podataka korisnika
       },
     },
   });
 
   if (error) {
-    console.log("Error from signUp function:", error);
-    return error;
+    console.log("Greška u signUp funkciji:", error.message);
+    return error.message; // Vratiti poruku greške za povratnu informaciju
   }
+
+  console.log("Korisnik uspešno registrovan:", data);
+  return data;
 };
 
 export const checkSession = async () => {

@@ -27,7 +27,7 @@ export function DateOfBirthPicker() {
         <PopoverTrigger asChild>
           <Button
             variant={"outline"}
-            className="w-[270px] rounded-2xl text-left font-normal pl-5 mt-2 text-accent hover:bg-transparent"
+            className="w-full rounded-2xl text-left font-normal pl-5 mt-2 text-accent hover:bg-transparent"
           >
             {selectedDate ? (
               format(selectedDate, "PPP") // Prikazuje izabrani datum u accent boji
