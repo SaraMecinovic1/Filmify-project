@@ -1,10 +1,9 @@
 import supabase from "@/config/supabase";
-import { string } from "zod";
 
-export const logIn = async () => {
+export const logIn = async (email: string, password: string) => {
   const { error } = await supabase.auth.signInWithPassword({
-    email: string,
-    password: string,
+    email,
+    password,
   });
 
   if (error) {
@@ -35,7 +34,7 @@ export const signUp = async (
   });
 
   if (error) {
-    console.log("Error in signUp function:", error.message);
+    console.log("Error in signUp function:", error);
     return error.message;
   }
 

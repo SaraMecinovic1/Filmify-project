@@ -11,14 +11,22 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DateOfBirthPicker() {
+export function DateOfBirthPicker({
+  onChange,
+  onBlur,
+  ref,
+  name,
+}: {
+  onChange: (date: number | undefined) => void; // promenjeno na number
+  onBlur: () => void;
+  ref: React.Ref<any>;
+  name: string;
+}) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 
   const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      setSelectedDate(date);
-      console.log("Selected Date of Birth:", date);
-    }
+    setSelectedDate(date);
+    onChange(date?.getTime() || undefined); // Prosljedjujemo timestamp
   };
 
   return (
@@ -26,14 +34,12 @@ export function DateOfBirthPicker() {
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"outline"}
+            variant="outline"
             className="w-full rounded-2xl text-left font-normal pl-5 mt-2 text-accent hover:bg-transparent"
           >
-            {selectedDate ? (
-              format(selectedDate, "PPP") // Prikazuje izabrani datum u accent boji
-            ) : (
-              <span className="text-accent">Pick a date of birth</span> // Placeholder u accent boji
-            )}
+            {selectedDate
+              ? format(selectedDate, "PPP")
+              : "Pick a date of birth"}
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-accent" />
           </Button>
         </PopoverTrigger>

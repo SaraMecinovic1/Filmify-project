@@ -1,12 +1,14 @@
 import { useState } from "react";
 import CinemaPic from "../../assets/cinema.jpg";
-import Inputs from "@/component/InputsCard";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUp } from "../../services/supabaseServices";
 import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { DateOfBirthPicker } from "@/component/InputsCard/CalendarForBirthday";
+import { SelectDemo } from "@/component/InputsCard/SelectDemo";
 
 const formSchema = z.object({
   name: z
@@ -19,7 +21,9 @@ const formSchema = z.object({
     .max(25, "Lastname must not be longer than 25 characters."),
   email: z.string().email("Please enter a valid email address."),
   password: z.string().min(6, "Password must have at least 6 characters"),
-  birthDate: z.number().min(1, "Please select a valid date of birth."),
+  birthDate: z
+    .number()
+    .refine((val) => val > 0, "Please select a valid date of birth."),
   gender: z.string().nonempty("Please select a gender."),
 });
 
@@ -27,6 +31,7 @@ function SignUp() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
+    control,
     register, // omogućava povezivanje inputa sa formom
     handleSubmit,
     formState: { errors },
@@ -34,11 +39,10 @@ function SignUp() {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<any> = async (data) => {
     setIsSubmitting(true);
     const { email, password, name, lastname, birthDate, gender } = data;
 
-    // Calling signUp function with the correct data
     const signUpError = await signUp(email, password, {
       name,
       lastname,
@@ -49,7 +53,8 @@ function SignUp() {
     setIsSubmitting(false);
 
     if (signUpError) {
-      console.log("Error during signup:", signUpError);
+      navigate("/login");
+      console.log(" signup:", signUpError);
     }
   };
 
@@ -64,7 +69,113 @@ function SignUp() {
         </h1>
         <div className="w-full h-auto sm:h-auto pt-10 bg-[#191919] bg-opacity-90 rounded-lg flex items-center flex-col justify-center">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-            <Inputs register={register} errors={errors} />
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-5 px-7 py-5">
+              <div>
+                <p className="text-left pl-3 text-sm font-medium text-textColor">
+                  Name
+                </p>
+                <Input
+                  className="w-full sm:w-[270px] rounded-2xl pl-5 mt-2"
+                  type="text"
+                  id="name"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <p className="text-red-500">
+                    {String(errors?.lastname?.message)}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <p className="text-left pl-3 text-sm font-medium text-textColor">
+                  Lastname
+                </p>
+                <Input
+                  className="w-full sm:w-[270px] rounded-2xl pl-5 mt-2"
+                  type="text"
+                  id="lastname"
+                  {...register("lastname")}
+                />
+                {errors.lastname && (
+                  <p className="text-red-500">
+                    {errors.lastname.message?.toString()}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <p className="text-left pl-3 text-sm font-medium text-textColor">
+                  Date of birth
+                </p>
+                <Controller
+                  name="birthDate"
+                  control={control} // 'control' dobijen iz 'useForm'
+                  rules={{
+                    required: "Date of birth is required.",
+                  }}
+                  render={({ field }) => (
+                    <DateOfBirthPicker
+                      {...field} // Ovdje prosleđuješ sve potrebne funkcije (onChange, onBlur, etc.)
+                    />
+                  )}
+                />
+              </div>
+
+              <div>
+                <p className="text-left pl-3 text-sm font-medium text-textColor">
+                  Gender
+                </p>
+                <Controller
+                  name="gender"
+                  control={control}
+                  rules={{ required: "Gender is required." }}
+                  render={({ field, fieldState }) => (
+                    <SelectDemo
+                      {...field}
+                      control={control} // Prosledi 'control' kao prop
+                      name="gender"
+                      onBlur={field.onBlur}
+                      ref={field.ref}
+                    />
+                  )}
+                />
+              </div>
+
+              <div>
+                <p className="text-left pl-3 text-sm font-medium text-textColor">
+                  Email
+                </p>
+                <Input
+                  className="w-full sm:w-[270px] rounded-2xl pl-5 mt-2"
+                  type="email"
+                  id="email"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="text-red-500">
+                    {errors.email.message?.toString()}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <p className="text-left pl-3 text-sm font-medium text-textColor">
+                  Password
+                </p>
+                <Input
+                  className="w-full sm:w-[270px] rounded-2xl pl-5 mt-2"
+                  type="password"
+                  id="password"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className="text-red-500">
+                    {errors.password.message?.toString()}
+                  </p>
+                )}
+              </div>
+            </div>
             <Button
               type="submit"
               variant="secondary"
@@ -73,6 +184,7 @@ function SignUp() {
             >
               {isSubmitting ? "Creating Account..." : "CREATE ACCOUNT"}
             </Button>
+
             <p
               onClick={() => navigate("/login")}
               className="font-medium text-[12px] pr-5 mb-3 text-accent hover:text-red-500 text-right"
