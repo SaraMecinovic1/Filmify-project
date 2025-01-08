@@ -1,16 +1,25 @@
+import { toast } from "react-toastify";
 import supabase from "@/config/supabase";
 
 export const logIn = async (email: string, password: string) => {
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
     console.log("Error from login function:", error);
-    return error;
+    toast.error("Login failed: " + error.message);
+    return null; // Vratite null ako je došlo do greške
   }
-  return null;
+
+  if (data?.user) {
+    toast.success(`Successfully logged in, ${data.user.email}`);
+    return data; // Vratite korisničke podatke samo ako je login uspešan
+  } else {
+    toast.error("Login failed: Invalid credentials");
+    return null; // Vratite null ako nije validan korisnik
+  }
 };
 
 export const signUp = async (
@@ -35,21 +44,11 @@ export const signUp = async (
 
   if (error) {
     console.log("Error in signUp function:", error);
+    toast.error("Sign up failed: " + error.message);
     return error.message;
   }
 
   console.log("User successfully signed up:", data);
+  toast.success("User successfully signed up!");
   return data;
-};
-
-export const checkSession = async () => {
-  const {
-    data: { session },
-  } = supabase.auth.getSession();
-
-  if (session) {
-    console.log("Korisnik je već ulogovan:", session.user);
-  } else {
-    console.log("Nema aktivne sesije.");
-  }
 };

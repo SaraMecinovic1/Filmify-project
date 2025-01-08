@@ -39,11 +39,12 @@ function SignUp() {
     resolver: zodResolver(formSchema),
   });
 
+  // SubmitHandler - Tip iz React Hook Forme, definiše da je funkcija handler za slanje forme
   const onSubmit: SubmitHandler<any> = async (data) => {
     setIsSubmitting(true);
     const { email, password, name, lastname, birthDate, gender } = data;
 
-    const signUpError = await signUp(email, password, {
+    const signUpIsValid = await signUp(email, password, {
       name,
       lastname,
       birthDate,
@@ -52,9 +53,9 @@ function SignUp() {
 
     setIsSubmitting(false);
 
-    if (signUpError) {
+    if (signUpIsValid) {
       navigate("/login");
-      console.log(" signup:", signUpError);
+      console.log("Signup is valid:", signUpIsValid);
     }
   };
 
@@ -110,15 +111,11 @@ function SignUp() {
                 </p>
                 <Controller
                   name="birthDate"
-                  control={control} // 'control' dobijen iz 'useForm'
+                  control={control}
                   rules={{
                     required: "Date of birth is required.",
                   }}
-                  render={({ field }) => (
-                    <DateOfBirthPicker
-                      {...field} // Ovdje prosleđuješ sve potrebne funkcije (onChange, onBlur, etc.)
-                    />
-                  )}
+                  render={({ field }) => <DateOfBirthPicker {...field} />}
                 />
               </div>
 
@@ -130,7 +127,7 @@ function SignUp() {
                   name="gender"
                   control={control}
                   rules={{ required: "Gender is required." }}
-                  render={({ field, fieldState }) => (
+                  render={({ field }) => (
                     <SelectDemo
                       {...field}
                       control={control} // Prosledi 'control' kao prop

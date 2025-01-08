@@ -9,6 +9,8 @@ import Upcoming from "./pages/UpcomingPage/Upcoming";
 import DetailsMovie from "./pages/DetailsPage/DetailsMovie";
 import SignUp from "./pages/SignUpPage";
 import Login from "./pages/LoginPage";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,7 @@ function App() {
         <Footer />
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
+      <ToastContainer />
     </QueryClientProvider>
   );
 }
