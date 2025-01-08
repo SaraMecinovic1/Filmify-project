@@ -79,7 +79,7 @@ export default function DetailsMovie() {
               ADD TO WATCH LIST
             </p>
 
-            <div className="px-5 mb-5 text-lg w-full sm:w-full lg:w-[500px] md:w-full h-auto mt-4 sm:mt-3 md:mt-3 text-center md:text-left md:px-0">
+            <div className=" px-5 mb-5 text-lg w-full sm:w-full lg:w-[500px] md:w-full h-auto mt-4 sm:mt-3 md:mt-3 text-center md:text-left md:px-0">
               {data?.overview}
             </div>
             <div className="mb-10">

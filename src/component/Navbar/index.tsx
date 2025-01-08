@@ -1,17 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Bars4Icon,
   XMarkIcon,
   UserCircleIcon,
+  ArrowRightCircleIcon,
+  ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "../../components/ui/button";
+import { toast } from "react-toastify";
+import { ArrowRightSquareIcon } from "lucide-react";
 
 const NavBar = () => {
   const isAboveMediumScreen = useMediaQuery("(min-width: 1060px)");
   const [isMenuToggled, setIsMenuToggled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setIsLoggedIn(true);
+      toast.success(`Welcome back to Filmify 👋`);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user"); // Uklanjanje korisnika iz localStorage
+    setIsLoggedIn(false);
+    toast.info("You have been logged out.");
+  };
 
   return (
     <nav>
@@ -44,13 +63,23 @@ const NavBar = () => {
 
           {isAboveMediumScreen && (
             <div className="flex items-center gap-4 ml-auto">
-              <Button
-                onClick={() => navigate("/signup")}
-                className="bg-secondary hover:bg-[#e95325] text-accent"
-              >
-                <UserCircleIcon className="h-10 w-10" />
-                Sign In
-              </Button>
+              {isLoggedIn ? (
+                <Button
+                  onClick={handleLogout}
+                  className="bg-secondary hover:bg-[#e95325]  text-accent"
+                >
+                  <ArrowRightStartOnRectangleIcon className="h-10 w-10 " />
+                  Logout
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => navigate("/signup")}
+                  className="bg-secondary hover:bg-[#e95325] text-accent"
+                >
+                  <UserCircleIcon className="h-10 w-10" />
+                  Sign In
+                </Button>
+              )}
             </div>
           )}
 
@@ -84,13 +113,23 @@ const NavBar = () => {
           </div>
 
           <div className="mt-auto p-6 flex items-center gap-4 pl-12">
-            <Button
-              onClick={() => navigate("/signup")}
-              className="bg-secondary hover:bg-[#e95325] text-accent"
-            >
-              SIGN UP
-              <UserCircleIcon />
-            </Button>
+            {isLoggedIn ? (
+              <Button
+                onClick={handleLogout}
+                className="bg-secondary hover:bg-[#e95325] text-accent"
+              >
+                <ArrowRightStartOnRectangleIcon className="h-10 w-10" />
+                Logout
+              </Button>
+            ) : (
+              <Button
+                onClick={() => navigate("/signup")}
+                className="bg-secondary hover:bg-[#e95325] text-accent"
+              >
+                <UserCircleIcon className="h-10 w-10" />
+                Sign In
+              </Button>
+            )}
           </div>
         </div>
       )}

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { logIn } from "@/services/supabaseServices";
+import { toast } from "react-toastify";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
@@ -33,11 +34,10 @@ const Login = () => {
     const loginIsValid = await logIn(email, password);
 
     if (loginIsValid && loginIsValid.user) {
+      localStorage.setItem("user", JSON.stringify(loginIsValid.user));
       navigate("/");
       console.log("Successful login", loginIsValid);
-    } else {
       reset();
-      console.log("Login failed: invalid credentials or other error");
     }
 
     setIsSubmitting(false);
@@ -48,7 +48,7 @@ const Login = () => {
       className="w-full h-[80vh] bg-cover bg-center flex justify-center items-center"
       style={{ backgroundImage: `url(${CinemaPic})` }}
     >
-      <div className="w-auto h-auto p-7 text-center rounded-lg">
+      <div className="w-[350px] h-auto p-7 text-center rounded-lg">
         <h1 className="text-secondary text-6xl font-bebas mb-5">FILMIFY</h1>
         <form
           onSubmit={handleSubmit(onSubmit)}
