@@ -7,7 +7,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { logIn } from "@/services/supabaseServices";
-import { toast } from "react-toastify";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address."),

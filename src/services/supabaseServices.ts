@@ -22,6 +22,18 @@ export const logIn = async (email: string, password: string) => {
   }
 };
 
+export const logOut = async () => {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.log("Logout error:", error.message);
+    toast.error("Failed to log out. Please try again.");
+    return false;
+  }
+
+  return true;
+};
+
 export const signUp = async (
   email: string,
   password: string,

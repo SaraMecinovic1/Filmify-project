@@ -5,12 +5,11 @@ import {
   Bars4Icon,
   XMarkIcon,
   UserCircleIcon,
-  ArrowRightCircleIcon,
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "../../components/ui/button";
 import { toast } from "react-toastify";
-import { ArrowRightSquareIcon } from "lucide-react";
+import { logOut } from "@/services/supabaseServices";
 
 const NavBar = () => {
   const isAboveMediumScreen = useMediaQuery("(min-width: 1060px)");
@@ -26,10 +25,13 @@ const NavBar = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("user"); // Uklanjanje korisnika iz localStorage
-    setIsLoggedIn(false);
-    toast.info("You have been logged out.");
+  const handleLogout = async () => {
+    const isLoggedOut = await logOut();
+    if (isLoggedOut) {
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
+      toast.info("You have been logged out.");
+    }
   };
 
   return (
