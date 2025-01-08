@@ -33,7 +33,6 @@ const Login = () => {
     const loginIsValid = await logIn(email, password);
 
     if (loginIsValid && loginIsValid.user) {
-      // Samo ako su korisnički podaci validni, preusmeriti korisnika
       navigate("/");
       console.log("Successful login", loginIsValid);
     } else {
@@ -41,7 +40,7 @@ const Login = () => {
       console.log("Login failed: invalid credentials or other error");
     }
 
-    setIsSubmitting(false); // Završava proces slanja
+    setIsSubmitting(false);
   };
 
   return (
