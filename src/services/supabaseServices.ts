@@ -10,15 +10,15 @@ export const logIn = async (email: string, password: string) => {
   if (error) {
     console.log("Error from login function:", error);
     toast.error("Login failed: " + error.message);
-    return null; // Vratite null ako je došlo do greške
+    return null;
   }
 
   if (data?.user) {
-    toast.success(`Successfully logged in, ${data.user.email}`);
-    return data; // Vratite korisničke podatke samo ako je login uspešan
+    toast.success(`Welcome, ${data.user.email} 👋`);
+    return data;
   } else {
     toast.error("Login failed: Invalid credentials");
-    return null; // Vratite null ako nije validan korisnik
+    return null;
   }
 };
 

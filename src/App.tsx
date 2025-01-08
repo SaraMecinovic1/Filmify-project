@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUpPage";
 import Login from "./pages/LoginPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +31,15 @@ function App() {
         <Footer />
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={10000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        toastClassName="custom-toast"
+      />
     </QueryClientProvider>
   );
 }
