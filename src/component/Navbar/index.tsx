@@ -10,6 +10,7 @@ import {
 import { Button } from "../../components/ui/button";
 import { toast } from "react-toastify";
 import { logOut } from "@/services/supabaseServices";
+import { FaHeart } from "react-icons/fa";
 
 const NavBar = () => {
   const isAboveMediumScreen = useMediaQuery("(min-width: 1060px)");
@@ -65,14 +66,23 @@ const NavBar = () => {
 
           {isAboveMediumScreen && (
             <div className="flex items-center gap-4 ml-auto">
+              <FaHeart
+                onClick={() => navigate("/mylistforwatching")}
+                fontSize={23}
+                width={24}
+                height={24}
+                className="text-accent mr-"
+              />
               {isLoggedIn ? (
-                <Button
-                  onClick={handleLogout}
-                  className="bg-secondary hover:bg-[#e95325]  text-accent"
-                >
-                  <ArrowRightStartOnRectangleIcon className="h-10 w-10 " />
-                  Logout
-                </Button>
+                <div className="flex flex-row">
+                  <Button
+                    onClick={handleLogout}
+                    className="bg-secondary hover:bg-[#e95325]  text-accent"
+                  >
+                    <ArrowRightStartOnRectangleIcon className="h-10 w-10 " />
+                    Logout
+                  </Button>
+                </div>
               ) : (
                 <Button
                   onClick={() => navigate("/signup")}
@@ -105,12 +115,26 @@ const NavBar = () => {
               <XMarkIcon className="h-7 w-7 text-white" />
             </button>
           </div>
-          <div className="flex flex-col gap-10 text-xl p-6 pl-12">
+
+          <div className="flex w-full flex-col gap-10 text-xl p-6 pl-12">
             <Link to="/movies" className="text-white hover:text-accent">
               Movies
             </Link>
             <Link to="/upcoming" className="text-white hover:text-accent">
               Upcoming
+            </Link>
+            <Link
+              to="/mylistforwatching"
+              className="text-white hover:text-accent flex flex-row"
+            >
+              My list
+              <FaHeart
+                onClick={() => navigate("/mylistforwatching")}
+                fontSize={18}
+                width={24}
+                height={24}
+                className="text-accent ml-2 mt-1"
+              />
             </Link>
           </div>
 
