@@ -1,25 +1,46 @@
 import Loader from "@/component/loading";
 import { Button } from "@/components/ui/button";
-import { fetchMovieDetails } from "@/services/tmdb";
+import { fetchMovieDetails, Movie } from "@/services/tmdb";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { CalendarDaysIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import useWatchlistStore from "../../hooks/watchlistStore";
 
 export default function DetailsMovie() {
   const { id } = useParams<{ id: string }>();
-  const [isInWatchList, setIsInWatchList] = useState(true);
+  const addToWatchlist = useWatchlistStore((state) => state.addToWatchlist);
+  const removeFromWatchlist = useWatchlistStore(
+    (state) => state.removeFromWatchlist
+  );
+  const watchlist = useWatchlistStore((state) => state.watchlist);
 
-  const { data, isLoading, isError } = useQuery({
+  const [isInWatchList, setIsInWatchList] = useState(false);
+
+  const { data, isLoading, isError } = useQuery<Movie>({
     queryKey: ["movieDetails", id],
-    queryFn: () => fetchMovieDetails(id),
+    queryFn: () => fetchMovieDetails(Number(id)),
   });
 
+  // Da li je film u watchlisti
+  useEffect(() => {
+    if (data) {
+      setIsInWatchList(watchlist.some((movie) => movie.id === data.id));
+    }
+    console.log(watchlist);
+  }, [data, watchlist]);
+
   const toggleWatchList = () => {
-    setIsInWatchList((prev) => !prev);
-    console.log("Watchlist status:", isInWatchList);
+    if (data) {
+      if (isInWatchList) {
+        removeFromWatchlist(data.id);
+      } else {
+        addToWatchlist(data);
+      }
+      setIsInWatchList((prev) => !prev);
+    }
   };
 
   if (isLoading) {
@@ -60,14 +81,6 @@ export default function DetailsMovie() {
 
             <p className="flex mt-2 text-md sm:text-[15px]">
               {isInWatchList ? (
-                <FiHeart
-                  onClick={toggleWatchList}
-                  fontSize={20}
-                  width={24}
-                  height={24}
-                  className="text-secondary mr-1"
-                />
-              ) : (
                 <FaHeart
                   onClick={toggleWatchList}
                   fontSize={20}
@@ -75,11 +88,19 @@ export default function DetailsMovie() {
                   height={24}
                   className="text-secondary mr-1"
                 />
+              ) : (
+                <FiHeart
+                  onClick={toggleWatchList}
+                  fontSize={20}
+                  width={24}
+                  height={24}
+                  className="text-secondary mr-1"
+                />
               )}
-              ADD TO WATCH LIST
+              {isInWatchList ? "REMOVE FROM WATCHLIST" : "ADD TO WATCHLIST"}
             </p>
 
-            <div className=" px-5 mb-5 text-lg w-full sm:w-full lg:w-[500px] md:w-full h-auto mt-4 sm:mt-3 md:mt-3 text-center md:text-left md:px-0">
+            <div className="px-5 mb-5 text-lg w-full sm:w-full lg:w-[500px] md:w-full h-auto mt-4 sm:mt-3 md:mt-3 text-center md:text-left md:px-0">
               {data?.overview}
             </div>
             <div className="mb-10">

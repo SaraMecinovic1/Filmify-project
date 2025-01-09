@@ -67,7 +67,7 @@ const NavBar = () => {
           {isAboveMediumScreen && (
             <div className="flex items-center gap-4 ml-auto">
               <FaHeart
-                onClick={() => navigate("/mylistforwatching")}
+                onClick={() => navigate("/watchlist")}
                 fontSize={23}
                 width={24}
                 height={24}
@@ -124,12 +124,12 @@ const NavBar = () => {
               Upcoming
             </Link>
             <Link
-              to="/mylistforwatching"
+              to="/watchlist"
               className="text-white hover:text-accent flex flex-row"
             >
               My list
               <FaHeart
-                onClick={() => navigate("/mylistforwatching")}
+                onClick={() => navigate("/watchlist")}
                 fontSize={18}
                 width={24}
                 height={24}

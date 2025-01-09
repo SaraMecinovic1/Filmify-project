@@ -12,6 +12,7 @@ import Login from "./pages/LoginPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import MyWatchingList from "./pages/MyListPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/movie/:id" element={<DetailsMovie />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/watchlist" element={<MyWatchingList />} />
         </Routes>
         <Footer />
       </div>
