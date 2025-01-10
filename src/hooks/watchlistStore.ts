@@ -1,26 +1,36 @@
 import { create } from "zustand";
-import { Movie } from "../services/tmdb"; // Uvezite Movie interfejs
+import { Movie } from "../services/tmdb"; 
 
 interface WatchlistState {
   watchlist: Movie[];
   addToWatchlist: (movie: Movie) => void;
   removeFromWatchlist: (id: number) => void;
+  loadWatchlist: () => void;
 }
 
 const useWatchlistStore = create<WatchlistState>((set) => ({
-  watchlist: [],
+  watchlist: JSON.parse(localStorage.getItem("watchlist") || "[]"),
   addToWatchlist: (movie) =>
     set((state) => {
-      // Dodaj film samo ako već nije u listi
       if (!state.watchlist.find((item) => item.id === movie.id)) {
-        return { watchlist: [...state.watchlist, movie] };
+        const updatedList = [...state.watchlist, movie];
+        localStorage.setItem("watchlist", JSON.stringify(updatedList));
+        return { watchlist: updatedList };
       }
       return state;
     }),
   removeFromWatchlist: (id) =>
-    set((state) => ({
-      watchlist: state.watchlist.filter((movie) => movie.id !== id),
-    })),
+    set((state) => {
+      const updatedList = state.watchlist.filter((movie) => movie.id !== id);
+      localStorage.setItem("watchlist", JSON.stringify(updatedList));
+      return { watchlist: updatedList };
+    }),
+  loadWatchlist: () => {
+    const savedWatchlist = JSON.parse(
+      localStorage.getItem("watchlist") || "[]"
+    );
+    set({ watchlist: savedWatchlist });
+  },
 }));
 
 export default useWatchlistStore;
