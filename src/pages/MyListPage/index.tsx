@@ -9,6 +9,7 @@ const MyWatchingList = () => {
 
   useEffect(() => {
     loadWatchlist();
+    console.log("loadWatchlist- ", watchlist);
   }, [loadWatchlist]);
 
   return (
