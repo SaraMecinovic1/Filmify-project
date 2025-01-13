@@ -35,7 +35,7 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={4000}
         hideProgressBar={false}
         closeOnClick
         pauseOnHover

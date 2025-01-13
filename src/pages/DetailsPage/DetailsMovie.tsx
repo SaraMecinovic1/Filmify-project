@@ -8,6 +8,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useWatchlistStore from "../../hooks/watchlistStore";
+import { SelectForMoviedate } from "@/component/SelectForMovieDate";
+import { Controller, useForm } from "react-hook-form"; // Importing useForm hook
+import { Ticket } from "lucide-react";
 
 export default function DetailsMovie() {
   const { id } = useParams<{ id: string }>();
@@ -24,12 +27,13 @@ export default function DetailsMovie() {
     queryFn: () => fetchMovieDetails(Number(id)),
   });
 
+  const { control, handleSubmit } = useForm();
+
   // Da li je film u watchlisti
   useEffect(() => {
     if (data) {
       setIsInWatchList(watchlist.some((movie) => movie.id === data.id));
     }
-    console.log(watchlist);
   }, [data, watchlist]);
 
   const toggleWatchList = () => {
@@ -41,6 +45,10 @@ export default function DetailsMovie() {
       }
       setIsInWatchList((prev) => !prev);
     }
+  };
+
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   if (isLoading) {
@@ -72,11 +80,11 @@ export default function DetailsMovie() {
           />
 
           <div className="flex flex-col justify-center gap-1 md:gap-1 md:items-start md:mx-5 sm:px-5 lg:px-5 sm:py-0 lg:py-0 items-center sm:items-center">
-            <h1 className="text-3xl sm:text-3xl lg:text-4xl font-bold text-accent mb-2">
+            <h1 className="text-[27px] md:text-left text-center sm:text-3xl lg:text-4xl font-bold text-accent mb-2">
               {data?.title.toUpperCase()}
             </h1>
             <h2 className="text-xl sm:text-xl lg:text-2xl font-normal text-accent">
-              2h 30m
+              1h 30m
             </h2>
 
             <p className="flex mt-2 text-md sm:text-[15px]">
@@ -105,9 +113,25 @@ export default function DetailsMovie() {
             </div>
             <div className="mb-10">
               <Button variant="secondary">
+                <Ticket />
                 MAKE RESERVATION
-                <CalendarDaysIcon />
               </Button>
+
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                  name="movieDate"
+                  control={control}
+                  render={({ field }) => (
+                    <SelectForMoviedate
+                      {...field}
+                      control={control}
+                      name="movieDate"
+                      onBlur={field.onBlur}
+                      ref={field.ref}
+                    />
+                  )}
+                />
+              </form>
             </div>
           </div>
         </div>
