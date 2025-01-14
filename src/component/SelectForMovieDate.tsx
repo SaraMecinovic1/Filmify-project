@@ -1,4 +1,4 @@
-import { Controller } from "react-hook-form";
+import { Controller, Control } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -8,30 +8,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar, CalendarDays } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 
-function generateRandomDatesForCurrentMonth(numDates: number) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
-
-  const randomDates = [];
-
-  for (let i = 0; i < numDates; i++) {
-    // Randomizujemo datum između 1 i 28
-    const randomDay = Math.floor(Math.random() * 28) + 1;
-    // Kreiramo datum sa slučajnim danom u trenutnom mesecu i godini
-    const randomDate = new Date(currentYear, currentMonth, randomDay);
-
-    // Formatiramo datum u format dd/mm/yyyy
-    // const formattedDate = randomDate.toISOString();
-    const formattedDate = `${randomDate.getDate()}/${
-      randomDate.getMonth() + 1
-    }/${randomDate.getFullYear()}`;
-
-    randomDates.push(formattedDate);
-  }
-  return randomDates;
+interface SelectForMovieDateProps {
+  control: Control<any>;
+  name: string;
+  onBlur: () => void;
+  ref: React.Ref<any>;
 }
 
 export function SelectForMoviedate({
@@ -39,13 +22,9 @@ export function SelectForMoviedate({
   name,
   onBlur,
   ref,
-}: {
-  control: any;
-  name: string;
-  onBlur: () => void;
-  ref: React.Ref<any>;
-}) {
-  const randomDates = generateRandomDatesForCurrentMonth(4);
+}: SelectForMovieDateProps) {
+  const randomDates = generateDatesEveryOtherDay(4);
+
   return (
     <Controller
       control={control}
@@ -55,17 +34,20 @@ export function SelectForMoviedate({
           <SelectTrigger
             ref={ref}
             onBlur={onBlur}
-            className="w-[200px] sm:w-[150px] rounded-3xl pl-5 mt-2 text-accent placeholder:text-accent"
+            className="w-[135px] sm:w-[135px] flex-row rounded-3xl pl-4 ml-5 text-accent placeholder:text-accent"
           >
-            <SelectValue placeholder="Date" />
+            <SelectValue
+              placeholder={
+                <div className="flex items-center">
+                  <CalendarDays className="mr-1.5 w-[15px] text-secondary" />
+                  Dates
+                </div>
+              }
+            />
           </SelectTrigger>
           <SelectContent className="bg-[#191919]">
             <SelectGroup>
-              <SelectLabel className="text-accent">
-                <CalendarDays />
-                Date
-              </SelectLabel>
-
+              <SelectLabel className="text-accent">Dates:</SelectLabel>
               {randomDates.map((date, index) => (
                 <SelectItem key={index} value={date} className="text-accent">
                   {date}
@@ -77,4 +59,21 @@ export function SelectForMoviedate({
       )}
     />
   );
+}
+
+function generateDatesEveryOtherDay(numDates: number): string[] {
+  const currentDate = new Date();
+  const dates: string[] = [];
+
+  for (let i = 0; i < numDates; i++) {
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + i * 2);
+    dates.push(
+      `${nextDate.getDate()}/${
+        nextDate.getMonth() + 1
+      }/${nextDate.getFullYear()}`
+    );
+  }
+
+  return dates;
 }

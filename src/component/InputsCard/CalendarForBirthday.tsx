@@ -13,14 +13,9 @@ import {
 
 export function DateOfBirthPicker({
   onChange,
-  onBlur,
-  ref,
-  name,
 }: {
-  onChange: (date: number | undefined) => void; // promenjeno na number
+  onChange: (date: number | undefined) => void;
   onBlur: () => void;
-  ref: React.Ref<any>;
-  name: string;
 }) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
 

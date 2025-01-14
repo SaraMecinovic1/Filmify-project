@@ -130,7 +130,7 @@ function SignUp() {
                   render={({ field }) => (
                     <SelectDemo
                       {...field}
-                      control={control} // Prosledi 'control' kao prop
+                      control={control}
                       name="gender"
                       onBlur={field.onBlur}
                       ref={field.ref}

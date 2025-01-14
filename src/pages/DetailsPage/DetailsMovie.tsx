@@ -3,13 +3,12 @@ import { Button } from "@/components/ui/button";
 import { fetchMovieDetails, Movie } from "@/services/tmdb";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { CalendarDaysIcon } from "@heroicons/react/24/solid";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useWatchlistStore from "../../hooks/watchlistStore";
 import { SelectForMoviedate } from "@/component/SelectForMovieDate";
-import { Controller, useForm } from "react-hook-form"; // Importing useForm hook
+import { Controller, useForm } from "react-hook-form";
 import { Ticket } from "lucide-react";
 
 export default function DetailsMovie() {
@@ -29,7 +28,6 @@ export default function DetailsMovie() {
 
   const { control, handleSubmit } = useForm();
 
-  // Da li je film u watchlisti
   useEffect(() => {
     if (data) {
       setIsInWatchList(watchlist.some((movie) => movie.id === data.id));
@@ -47,8 +45,8 @@ export default function DetailsMovie() {
     }
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = (formData: any) => {
+    console.log(formData);
   };
 
   if (isLoading) {
@@ -76,7 +74,7 @@ export default function DetailsMovie() {
           <img
             src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
             alt={data?.title}
-            className="rounded-lg border w-[330px] h-[440px] sm:w-[400px] sm:h-[550px] sm:ml-[37px] md:w-[400px] md:h-[550px] lg:w-[400px] lg:h-[550px] object-cover"
+            className="rounded-lg w-[330px] h-[440px] sm:w-[400px] sm:h-[550px] sm:ml-[37px] md:w-[400px] md:h-[550px] lg:w-[400px] lg:h-[550px] object-cover"
           />
 
           <div className="flex flex-col justify-center gap-1 md:gap-1 md:items-start md:mx-5 sm:px-5 lg:px-5 sm:py-0 lg:py-0 items-center sm:items-center">
@@ -92,17 +90,13 @@ export default function DetailsMovie() {
                 <FaHeart
                   onClick={toggleWatchList}
                   fontSize={20}
-                  width={24}
-                  height={24}
-                  className="text-secondary mr-1"
+                  className="text-secondary mr-1 cursor-pointer"
                 />
               ) : (
                 <FiHeart
                   onClick={toggleWatchList}
                   fontSize={20}
-                  width={24}
-                  height={24}
-                  className="text-secondary mr-1"
+                  className="text-secondary mr-1 cursor-pointer"
                 />
               )}
               {isInWatchList ? "REMOVE FROM WATCHLIST" : "ADD TO WATCHLIST"}
@@ -111,7 +105,7 @@ export default function DetailsMovie() {
             <div className="px-5 mb-5 text-lg w-full sm:w-full lg:w-[500px] md:w-full h-auto mt-4 sm:mt-3 md:mt-3 text-center md:text-left md:px-0">
               {data?.overview}
             </div>
-            <div className="mb-10">
+            <div className="mb-10 mt-5 flex">
               <Button variant="secondary">
                 <Ticket />
                 MAKE RESERVATION
