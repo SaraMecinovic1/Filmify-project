@@ -6,7 +6,7 @@ import { FaHeart } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import useWatchlistStore from "../../hooks/watchlistStore";
+import useWatchlistStore from "../../store/watchlistStore";
 import { SelectForMoviedate } from "@/component/SelectForMovieDate";
 import { Controller, useForm } from "react-hook-form";
 import { Ticket } from "lucide-react";
@@ -26,7 +26,7 @@ export default function DetailsMovie() {
     queryFn: () => fetchMovieDetails(Number(id)),
   });
 
-  const { control, handleSubmit } = useForm();
+  const { control } = useForm();
 
   useEffect(() => {
     if (data) {
@@ -43,10 +43,6 @@ export default function DetailsMovie() {
       }
       setIsInWatchList((prev) => !prev);
     }
-  };
-
-  const onSubmit = (formData: any) => {
-    console.log(formData);
   };
 
   if (isLoading) {
@@ -111,7 +107,7 @@ export default function DetailsMovie() {
                 MAKE RESERVATION
               </Button>
 
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form>
                 <Controller
                   name="movieDate"
                   control={control}
@@ -119,7 +115,6 @@ export default function DetailsMovie() {
                     <SelectForMoviedate
                       {...field}
                       control={control}
-                      name="movieDate"
                       onBlur={field.onBlur}
                       ref={field.ref}
                     />

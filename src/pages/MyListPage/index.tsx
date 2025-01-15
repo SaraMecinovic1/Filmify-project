@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useWatchlistStore from "@/hooks/watchlistStore";
+import useWatchlistStore from "@/store/watchlistStore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -45,7 +45,9 @@ const MyWatchingList = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                       removeFromWatchlist(movie.id);
-                      toast.success("Movie removed! It’s no longer on your watchlist.");
+                      toast.success(
+                        "Movie removed! It’s no longer on your watchlist."
+                      );
                     }}
                     className="absolute top-0 right-0  w-[30px] h-[40px] bg-gray-500 bg-opacity-20 rounded-bl-lg flex items-center justify-center cursor-pointer"
                   >

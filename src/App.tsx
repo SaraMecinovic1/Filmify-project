@@ -13,10 +13,19 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import MyWatchingList from "./pages/MyListPage";
+import { useEffect } from "react";
+import { useAuthStore } from "./store/authStore";
 
 const queryClient = new QueryClient();
 
 function App() {
+  const { fetchUser, subscribeAuth } = useAuthStore();
+
+  useEffect(() => {
+    fetchUser(); 
+    subscribeAuth(); 
+  }, []);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <div className="w-full font-inter">

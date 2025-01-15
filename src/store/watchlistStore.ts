@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Movie } from "../services/tmdb"; 
+import { Movie } from "../services/tmdb";
 
 interface WatchlistState {
   watchlist: Movie[];
