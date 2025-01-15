@@ -34,7 +34,7 @@ export function SelectForMoviedate({
           <SelectTrigger
             ref={ref}
             onBlur={onBlur}
-            className="w-[135px] sm:w-[135px] flex-row rounded-3xl pl-4 ml-5 text-accent placeholder:text-accent"
+            className="w-[135px] sm:w-[135px] flex-row rounded-3xl pl-4  text-accent placeholder:text-accent"
           >
             <SelectValue
               placeholder={

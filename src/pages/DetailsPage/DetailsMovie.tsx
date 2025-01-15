@@ -52,7 +52,7 @@ export default function DetailsMovie() {
       alert("You must be logged in to make a reservation.");
       return;
     } else {
-      navigate("/");
+      navigate(`/reservation/${data?.id}`);
       alert("Reservation made successfully!");
     }
   };
@@ -114,6 +114,7 @@ export default function DetailsMovie() {
             </div>
             <div className="mb-10 mt-5 flex">
               <Button
+              className="mr-5"
                 variant="secondary"
                 onClick={() => navigateToReservation()}
               >
