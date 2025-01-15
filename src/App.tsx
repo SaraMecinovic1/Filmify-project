@@ -22,10 +22,10 @@ function App() {
   const { fetchUser, subscribeAuth } = useAuthStore();
 
   useEffect(() => {
-    fetchUser(); 
-    subscribeAuth(); 
-  }, []);
-  
+    fetchUser();
+    subscribeAuth();
+  }, [fetchUser, subscribeAuth]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="w-full font-inter">

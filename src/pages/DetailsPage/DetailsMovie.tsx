@@ -4,20 +4,23 @@ import { fetchMovieDetails, Movie } from "@/services/tmdb";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useWatchlistStore from "../../store/watchlistStore";
 import { SelectForMoviedate } from "@/component/SelectForMovieDate";
 import { Controller, useForm } from "react-hook-form";
 import { Ticket } from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
 
 export default function DetailsMovie() {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const addToWatchlist = useWatchlistStore((state) => state.addToWatchlist);
   const removeFromWatchlist = useWatchlistStore(
     (state) => state.removeFromWatchlist
   );
   const watchlist = useWatchlistStore((state) => state.watchlist);
+  const { user } = useAuthStore();
 
   const [isInWatchList, setIsInWatchList] = useState(false);
 
@@ -44,7 +47,15 @@ export default function DetailsMovie() {
       setIsInWatchList((prev) => !prev);
     }
   };
-
+  const navigateToReservation = () => {
+    if (!user) {
+      alert("You must be logged in to make a reservation.");
+      return;
+    } else {
+      navigate("/");
+      alert("Reservation made successfully!");
+    }
+  };
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -102,7 +113,10 @@ export default function DetailsMovie() {
               {data?.overview}
             </div>
             <div className="mb-10 mt-5 flex">
-              <Button variant="secondary">
+              <Button
+                variant="secondary"
+                onClick={() => navigateToReservation()}
+              >
                 <Ticket />
                 MAKE RESERVATION
               </Button>

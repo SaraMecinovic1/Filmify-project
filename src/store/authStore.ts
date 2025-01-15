@@ -29,8 +29,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
     if (error) {
       console.error(error);
     }
-    console.log("Fetched user:", session?.user || null);
     set({ user: session?.user || null, loading: false });
+    console.log("Fetched user:", session?.user || null);
   },
 
   subscribeAuth: () => {
