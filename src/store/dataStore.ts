@@ -1,25 +1,25 @@
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-interface userBookDate {
+interface UserBookDate {
   movieTitle: string;
   movieId: number;
   date: string;
-  adults: number;
-  children: number;
+  adultsCount: number;
+  childrenCount: number;
 }
 
 interface BookProps {
-  userData: userBookDate | null;
+  userData: UserBookDate | null;
   loading: boolean;
-  setUser: (userData: userBookDate | null) => void;
+  setUser: (userData: UserBookDate | null) => void;
   setLoading: (loading: boolean) => void;
   newData: (
     movieTitle: string,
     movieId: number,
     date: string,
-    adults: number,
-    children: number
+    adultsCount: number,
+    childrenCount: number
   ) => void;
   addTicket: (type: "adults" | "children") => void;
   removeTicket: (type: "adults" | "children") => void;
@@ -30,37 +30,43 @@ export const useDataStore = create<BookProps>((set) => ({
   userData: null,
   setUser: (userData) => set({ userData }),
   setLoading: (loading) => set({ loading }),
+
   newData: (movieTitle, movieId, date, adults, children) =>
     set({
-      userData: { movieTitle, movieId, date, adults, children },
+      userData: {
+        movieTitle,
+        movieId,
+        date,
+        adultsCount: adults,
+        childrenCount: children,
+      },
       loading: false,
     }),
 
   addTicket: (type) => {
     set((state) => {
-      const userData = state.userData || { adults: 0, children: 0 };
-      const totalTickets = userData.adults + userData.children;
+      const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
+      const totalTickets = userData.adultsCount + userData.childrenCount;
 
-      if (totalTickets < 6) {
-        if (type === "adults") {
-          return {
-            userData: {
-              ...userData,
-              adults: userData.adults + 1,
-            },
-          };
-        } else if (type === "children") {
-          return {
-            userData: {
-              ...userData,
-              children: userData.children + 1,
-            },
-          };
-        }
+      if (totalTickets >= 6) {
+        toast.info("Maximum number of tickets is 6!");
+        return state;
       }
 
-      if (totalTickets === 6) {
-        toast.info("Maximum number of tickets is 6!");
+      if (type === "adults") {
+        return {
+          userData: {
+            ...userData,
+            adultsCount: userData.adultsCount + 1,
+          },
+        };
+      } else if (type === "children") {
+        return {
+          userData: {
+            ...userData,
+            childrenCount: userData.childrenCount + 1,
+          },
+        };
       }
 
       return state;
@@ -69,23 +75,24 @@ export const useDataStore = create<BookProps>((set) => ({
 
   removeTicket: (type) => {
     set((state) => {
-      const userData = state.userData || { adults: 0, children: 0 }; // Ensure there's always a userData object
+      const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
 
-      if (type === "adults" && userData.adults > 0) {
+      if (type === "adults" && userData.adultsCount > 0) {
         return {
           userData: {
-            ...userData,
-            adults: userData.adults - 1,
+            ...state.userData,
+            adultsCount: userData.adultsCount - 1,
           },
         };
-      } else if (type === "children" && userData.children > 0) {
+      } else if (type === "children" && userData.childrenCount > 0) {
         return {
           userData: {
-            ...userData,
-            children: userData.children - 1,
+            ...state.userData,
+            childrenCount: userData.childrenCount - 1,
           },
         };
       }
+
       return state;
     });
   },

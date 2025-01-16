@@ -8,10 +8,13 @@ import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const BookTicket = () => {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, formState } = useForm();
   const { data, isLoading } = useQuery<Movie>({
     queryKey: ["movieDetails", id],
     queryFn: () => fetchMovieDetails(Number(id)),
@@ -19,16 +22,26 @@ const BookTicket = () => {
   const { newData, addTicket, removeTicket, userData } = useDataStore();
 
   const onSubmit = (formData: any) => {
+    const { adultsCount, childrenCount } = userData || {
+      adultsCount: 0,
+      childrenCount: 0,
+    };
+    if (!formData.movieDate || (adultsCount === 0 && childrenCount === 0)) {
+      toast.info("Please select a movie date and at least one ticket!");
+      return;
+    }
     newData(
       data?.title || "",
       data?.id || 0,
       formData.movieDate,
-      formData.adults,
-      formData.children
+      adultsCount,
+      childrenCount
     );
-  };
-  console.log("Tickets", userData);
 
+    navigate("/");
+  };
+
+  console.log("Tickets: ", userData);
   return (
     <div className="w-full h-full px-4 sm:px-6 lg:px-10">
       <Stepper />
@@ -45,18 +58,19 @@ const BookTicket = () => {
           </div>
 
           <div className="flex flex-col w-full gap-4 text-center sm:text-left">
-            <h1 className="text-2xl sm:text-2xl lg:text-3xl font-bold text-accent">
-              {data?.title?.toUpperCase()}
-            </h1>
-            <h1 className="text-base sm:text-lg font-semibold text-secondary">
-              FILMIFY BELGRADE
-            </h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+              <h1 className="text-2xl sm:text-2xl lg:text-3xl font-bold text-accent">
+                {data?.title?.toUpperCase()}
+              </h1>
+              <h1 className="text-base sm:text-lg font-semibold text-secondary">
+                FILMIFY BELGRADE
+              </h1>
 
-            <div className="mt-2">
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mt-2">
                 <Controller
                   name="movieDate"
                   control={control}
+                  rules={{ required: true }}
                   render={({ field }) => (
                     <SelectForMoviedate
                       {...field}
@@ -66,63 +80,64 @@ const BookTicket = () => {
                     />
                   )}
                 />
-              </form>
-            </div>
+              </div>
 
-            <div className="w-full mt-4 text-accent">
-              <hr className="w-full mb-3 border-gray-600" />
+              <div className="w-full mt-4 text-accent">
+                <hr className="w-full mb-3 border-gray-600" />
 
-              <div className="flex justify-between items-center mb-3">
-                <h1 className="text-sm sm:text-lg">Adults</h1>
-                <div className="flex items-center text-2xl gap-2">
-                  <MinusCircleIcon
-                    width={24}
-                    className="text-secondary"
-                    onClick={() => removeTicket("adults")}
-                  />
-                  {userData?.adults || 0}{" "}
-                  <PlusCircleIcon
-                    width={24}
-                    className="text-secondary"
-                    onClick={() => addTicket("adults")}
-                  />
+                <div className="flex justify-between items-center mb-3">
+                  <h1 className="text-sm sm:text-lg">Adults</h1>
+                  <div className="flex items-center text-2xl gap-2">
+                    <MinusCircleIcon
+                      width={24}
+                      className="text-secondary"
+                      onClick={() => removeTicket("adults")}
+                    />
+                    {userData?.adultsCount || 0}{" "}
+                    <PlusCircleIcon
+                      width={24}
+                      className="text-secondary"
+                      onClick={() => addTicket("adults")}
+                    />
+                  </div>
+                </div>
+
+                <hr className="w-full mb-3 border-gray-600" />
+
+                <div className="flex justify-between items-center mb-3">
+                  <h1 className="text-sm sm:text-lg">Children</h1>
+                  <div className="flex items-center text-2xl gap-2">
+                    <MinusCircleIcon
+                      width={24}
+                      className="text-secondary"
+                      onClick={() => removeTicket("children")}
+                    />
+                    {userData?.childrenCount || 0}{" "}
+                    <PlusCircleIcon
+                      width={24}
+                      className="text-secondary"
+                      onClick={() => addTicket("children")}
+                    />
+                  </div>
+                </div>
+
+                <hr className="w-full mb-3 border-gray-600" />
+
+                <p className="text-gray-400 text-xs sm:text-sm">
+                  You can book a maximum of 6 tickets/day
+                </p>
+
+                <div className="flex justify-center sm:justify-end mt-5">
+                  <Button
+                    type="submit"
+                    className="w-40 sm:w-48 rounded-3xl bg-secondary hover:bg-orange-600"
+                    // disabled={isSubmitDisabled}
+                  >
+                    NEXT STEP
+                  </Button>
                 </div>
               </div>
-
-              <hr className="w-full mb-3 border-gray-600" />
-
-              <div className="flex justify-between items-center mb-3">
-                <h1 className="text-sm sm:text-lg">Children</h1>
-                <div className="flex items-center text-2xl gap-2">
-                  <MinusCircleIcon
-                    width={24}
-                    className="text-secondary"
-                    onClick={() => removeTicket("children")}
-                  />
-                  {userData?.children || 0}{" "}
-                  <PlusCircleIcon
-                    width={24}
-                    className="text-secondary"
-                    onClick={() => addTicket("children")}
-                  />
-                </div>
-              </div>
-
-              <hr className="w-full mb-3 border-gray-600" />
-
-              <p className="text-gray-400 text-xs sm:text-sm">
-                You can book a maximum of 6 tickets/day
-              </p>
-
-              <div className="flex justify-center sm:justify-end mt-5">
-                <Button
-                  type="submit"
-                  className="w-40 sm:w-48 rounded-3xl bg-secondary hover:bg-orange-600"
-                >
-                  NEXT STEP
-                </Button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       )}
