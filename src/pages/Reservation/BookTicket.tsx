@@ -1,5 +1,6 @@
 import Loader from "@/component/loading";
 import { SelectForMoviedate } from "@/component/SelectForMovieDate";
+import Stepper from "@/component/Stepper";
 import { Button } from "@/components/ui/button";
 import { fetchMovieDetails, Movie } from "@/services/tmdb";
 import {
@@ -20,16 +21,21 @@ const BookTicket = () => {
   });
   return (
     <div className="w-full h-full px-10">
+      <Stepper />
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full h-[70vh] my-20 p-7 rounded-lg bg-[#2e2e2e] flex flex-row mt-[120px]">
-          <div className="w-[400px] h-full bg-red-500">
-            <img
-              src={`https://image.tmdb.org/t/p/w400/${data?.poster_path}`}
-              alt={data?.title}
-              className="w-[400px] h-full object-cover"
-            />
+        <div className="w-full h-[70vh] mb-20 p-7 rounded-lg bg-[#2e2e2e] flex flex-row ">
+          <div className="w-[400px] h-full">
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <img
+                src={`https://image.tmdb.org/t/p/w400/${data?.poster_path}`}
+                alt={data?.title}
+                className="w-[400px] h-full object-cover"
+              />
+            )}
           </div>
 
           <div className="flex flex-col w-full gap-1 md:gap-1 md:items-start md:mx-5 sm:px-5 lg:px-5 sm:py-0 sm:items-center">
@@ -58,7 +64,7 @@ const BookTicket = () => {
             </div>
 
             <div className="w-full mt-4 text-accent">
-              <hr className="w-full mb-3" />
+              <hr className="w-full mb-3  border-gray-600" />
               {/* Adults section */}
               <div className="flex justify-between items-center mb-3">
                 <h1 className="text-xl">Adults</h1>
@@ -68,7 +74,7 @@ const BookTicket = () => {
                   <PlusCircleIcon width={"30px"} className="text-secondary" />
                 </div>
               </div>
-              <hr className="w-full mb-3" />
+              <hr className="w-full mb-3  border-gray-600" />
 
               {/* Children section */}
               <div className="flex justify-between items-center mb-3">
@@ -79,7 +85,7 @@ const BookTicket = () => {
                   <PlusCircleIcon width={"30px"} className="text-secondary" />
                 </div>
               </div>
-              <hr className="w-full mb-3" />
+              <hr className="w-full mb-3  border-gray-600" />
 
               <p className="text-gray-400 text-sm">
                 You can book a maximum of 6 tickets/day
