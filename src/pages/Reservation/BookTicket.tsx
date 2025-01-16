@@ -14,13 +14,12 @@ import { toast } from "react-toastify";
 const BookTicket = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { control, handleSubmit, formState } = useForm();
+  const { control, handleSubmit } = useForm();
   const { data, isLoading } = useQuery<Movie>({
     queryKey: ["movieDetails", id],
     queryFn: () => fetchMovieDetails(Number(id)),
   });
-  const { newData, loading, addTicket, removeTicket, userData } =
-    useDataStore();
+  const { newData, addTicket, removeTicket, userData } = useDataStore();
 
   const onSubmit = (formData: any) => {
     const { adultsCount, childrenCount } = userData || {
@@ -44,12 +43,15 @@ const BookTicket = () => {
 
   console.log("Tickets: ", userData);
   return (
-    <div className="w-full h-full px-4 sm:px-6 lg:px-10">
+    <div
+      className="w-full h-full
+     px-4 sm:px-6 lg:px-10"
+    >
       <Stepper />
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full h-auto sm:h-[70vh] mb-5 sm:mb-20 p-5 sm:p-7 rounded-lg bg-[#2e2e2e] flex flex-col sm:flex-row gap-5">
+        <div className="w-full h-auto sm:h-auto lg-[70vh] mb-5 sm:mb-20 p-5 sm:p-7 rounded-lg bg-[#2e2e2e] flex flex-col sm:flex-row gap-5">
           <div className="w-full sm:w-[300px] max-w-sm mx-auto sm:mx-0 rounded-lg">
             <img
               src={`https://image.tmdb.org/t/p/w400/${data?.poster_path}`}
@@ -132,15 +134,8 @@ const BookTicket = () => {
                   <Button
                     type="submit"
                     className="w-40 sm:w-48 rounded-3xl bg-secondary hover:bg-orange-600"
-                    disabled={
-                      loading ||
-                      formState.isSubmitting ||
-                      formState.errors.movieDate ||
-                      (userData?.adultsCount === 0 &&
-                        userData?.childrenCount === 0)
-                    }
                   >
-                    {loading ? "Loading..." : "NEXT STEP"}{" "}
+                    NEXT STEP
                   </Button>
                 </div>
               </div>

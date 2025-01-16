@@ -11,6 +11,7 @@ import { SelectForMoviedate } from "@/component/SelectForMovieDate";
 import { Controller, useForm } from "react-hook-form";
 import { Ticket } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import { toast } from "react-toastify";
 
 export default function DetailsMovie() {
   const navigate = useNavigate();
@@ -49,11 +50,10 @@ export default function DetailsMovie() {
   };
   const navigateToReservation = () => {
     if (!user) {
-      alert("You must be logged in to make a reservation.");
+      toast.error("You must be logged in to make a reservation.");
       return;
     } else {
       navigate(`/reservation/${data?.id}`);
-      alert("Reservation made successfully!");
     }
   };
   if (isLoading) {
@@ -114,7 +114,7 @@ export default function DetailsMovie() {
             </div>
             <div className="mb-10 mt-5 flex">
               <Button
-              className="mr-5"
+                className="mr-5"
                 variant="secondary"
                 onClick={() => navigateToReservation()}
               >

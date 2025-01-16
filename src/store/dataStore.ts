@@ -7,6 +7,7 @@ interface UserBookDate {
   date: string;
   adultsCount: number;
   childrenCount: number;
+  seats: string[]; 
 }
 
 interface BookProps {
@@ -19,10 +20,12 @@ interface BookProps {
     movieId: number,
     date: string,
     adultsCount: number,
-    childrenCount: number
+    childrenCount: number,
+    seats: string[] 
   ) => void;
   addTicket: (type: "adults" | "children") => void;
   removeTicket: (type: "adults" | "children") => void;
+  setSeats: (seats: string[]) => void; 
 }
 
 export const useDataStore = create<BookProps>((set) => ({
@@ -31,7 +34,8 @@ export const useDataStore = create<BookProps>((set) => ({
   setUser: (userData) => set({ userData }),
   setLoading: (loading) => set({ loading }),
 
-  newData: (movieTitle, movieId, date, adults, children) =>
+  // Funkcija za ažuriranje svih podataka, uključujući seats
+  newData: (movieTitle, movieId, date, adults, children, seats) =>
     set({
       userData: {
         movieTitle,
@@ -39,10 +43,22 @@ export const useDataStore = create<BookProps>((set) => ({
         date,
         adultsCount: adults,
         childrenCount: children,
+        seats: seats || [], // Ako seats nisu prosleđeni, koristi praznu listu
       },
       loading: false,
     }),
 
+  // Funkcija za ažuriranje seats
+  setSeats: (seats) => {
+    set((state) => ({
+      userData: {
+        ...state.userData!,
+        seats: seats,
+      },
+    }));
+  },
+
+  // Ostale funkcije ostaju nepromenjene
   addTicket: (type) => {
     set((state) => {
       const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
