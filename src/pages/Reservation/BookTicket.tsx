@@ -19,15 +19,17 @@ const BookTicket = () => {
     queryKey: ["movieDetails", id],
     queryFn: () => fetchMovieDetails(Number(id)),
   });
-  const { newData, addTicket, removeTicket, userData } = useDataStore();
+  const { newData, loading, addTicket, removeTicket, userData } =
+    useDataStore();
 
   const onSubmit = (formData: any) => {
     const { adultsCount, childrenCount } = userData || {
       adultsCount: 0,
       childrenCount: 0,
     };
-    if (!formData.movieDate || (adultsCount === 0 && childrenCount === 0)) {
-      toast.info("Please select a movie date and at least one ticket!");
+
+    if (adultsCount === 0 && childrenCount === 0) {
+      toast.error("Please select a movie date and at least one ticket!");
       return;
     }
     newData(
@@ -37,7 +39,6 @@ const BookTicket = () => {
       adultsCount,
       childrenCount
     );
-
     navigate("/");
   };
 
@@ -131,9 +132,15 @@ const BookTicket = () => {
                   <Button
                     type="submit"
                     className="w-40 sm:w-48 rounded-3xl bg-secondary hover:bg-orange-600"
-                    // disabled={isSubmitDisabled}
+                    disabled={
+                      loading ||
+                      formState.isSubmitting ||
+                      formState.errors.movieDate ||
+                      (userData?.adultsCount === 0 &&
+                        userData?.childrenCount === 0)
+                    }
                   >
-                    NEXT STEP
+                    {loading ? "Loading..." : "NEXT STEP"}{" "}
                   </Button>
                 </div>
               </div>
