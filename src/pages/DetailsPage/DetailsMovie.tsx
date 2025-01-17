@@ -53,7 +53,7 @@ export default function DetailsMovie() {
       toast.error("You must be logged in to make a reservation.");
       return;
     } else {
-      navigate(`/reservation/${data?.id}`);
+      navigate(`/tickets/${data?.id}`);
     }
   };
   if (isLoading) {

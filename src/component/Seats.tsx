@@ -7,7 +7,7 @@ const SeatsBox = () => {
   const selectedSeats = getSelectedSeats();
 
   const handleSeatClick = (rowIndex: number, seatIndex: number) => {
-    const seatId = `${rowIndex + 1}-${seatIndex + 1}`;
+    const seatId = `${rowIndex + 1}R-${seatIndex + 1}S`; // Updated seatId format
     const isSelected = selectedSeats.includes(seatId);
 
     const newSelectedSeats = isSelected
@@ -29,16 +29,16 @@ const SeatsBox = () => {
               {rowIndex + 1}.
             </span>
             {[...Array(seatCount)].map((_, seatIndex) => {
-              const seatId = `${rowIndex + 1}-${seatIndex + 1}`;
+              const seatId = `${rowIndex + 1}R-${seatIndex + 1}S`; // Updated seatId format with 'R' and 'S'
               const isSelected = selectedSeats.includes(seatId);
 
               return (
                 <FontAwesomeIcon
                   key={seatId}
                   icon={isSelected ? faSquareXmark : faSquare}
-                  className="text-lg sm:text-2xl mx-1 sm:mx-2 text-accent "
+                  className="text-lg sm:text-2xl mx-1 sm:mx-2 text-accent"
                   id={seatId}
-                  onClick={() => handleSeatClick(rowIndex, seatIndex)}
+                  onClick={() => handleSeatClick(rowIndex, seatIndex)} // Updated to use the new seatId format
                 />
               );
             })}
