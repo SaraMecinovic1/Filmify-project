@@ -1,7 +1,9 @@
 import Loader from "@/component/loading";
 import SeatsBox from "@/component/Seats";
 import Stepper from "@/component/Stepper";
-import React from "react";
+import { faSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {};
 
@@ -16,6 +18,23 @@ const Seats = (props: Props) => {
         </div>
 
         <SeatsBox />
+        <hr className=" border-gray-700 w-full  " />
+        <div className="w-full flex flex-row justify-center">
+          <div className="mx-3">
+            <FontAwesomeIcon
+              icon={faSquare}
+              className="text-xl mx-2 text-accent"
+            />
+            <p className="text-sm text-textColor">FREE</p>
+          </div>
+          <div className="mx-3 text-center">
+            <FontAwesomeIcon
+              icon={faSquareXmark}
+              className="text-xl mx-2 text-accent"
+            />
+            <p className="text-sm text-textColor">CHOSEN</p>
+          </div>
+        </div>
       </div>
     </div>
   );
