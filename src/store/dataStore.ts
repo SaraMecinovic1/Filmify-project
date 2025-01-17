@@ -7,7 +7,7 @@ interface UserBookDate {
   date: string;
   adultsCount: number;
   childrenCount: number;
-  seats: string[]; 
+  seats: string[];
 }
 
 interface BookProps {
@@ -21,11 +21,11 @@ interface BookProps {
     date: string,
     adultsCount: number,
     childrenCount: number,
-    seats: string[] 
+    seats: string[]
   ) => void;
   addTicket: (type: "adults" | "children") => void;
   removeTicket: (type: "adults" | "children") => void;
-  setSeats: (seats: string[]) => void; 
+  setSeats: (seats: string[]) => void;
 }
 
 export const useDataStore = create<BookProps>((set) => ({
@@ -43,7 +43,7 @@ export const useDataStore = create<BookProps>((set) => ({
         date,
         adultsCount: adults,
         childrenCount: children,
-        seats: seats || [], // Ako seats nisu prosleđeni, koristi praznu listu
+        seats: seats || [],
       },
       loading: false,
     }),
@@ -58,15 +58,14 @@ export const useDataStore = create<BookProps>((set) => ({
     }));
   },
 
-  // Ostale funkcije ostaju nepromenjene
   addTicket: (type) => {
     set((state) => {
-      const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
+      const userData = state.userData || { adultsCount: 0, childrenCount: 0 }; // {}zato ako podaci jos nisu inicijalizovani da moze da koristi ove podtake normalno i da radi funkcija
       const totalTickets = userData.adultsCount + userData.childrenCount;
 
       if (totalTickets >= 6) {
         toast.info("Maximum number of tickets is 6!");
-        return state;
+        return state; //vrati trenutno stanje totalTickets
       }
 
       if (type === "adults") {

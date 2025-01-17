@@ -16,6 +16,7 @@ import MyWatchingList from "./pages/MyListPage";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/authStore";
 import BookTicket from "./pages/Reservation/BookTicket";
+import Seats from "./pages/Reservation/BookSeats";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/watchlist" element={<MyWatchingList />} />
           <Route path="/reservation/:id" element={<BookTicket />} />
+          <Route path="/seats/" element={<Seats />} />
         </Routes>
         <Footer />
       </div>

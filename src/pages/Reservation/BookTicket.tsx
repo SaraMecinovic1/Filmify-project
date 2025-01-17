@@ -22,9 +22,10 @@ const BookTicket = () => {
   const { newData, addTicket, removeTicket, userData } = useDataStore();
 
   const onSubmit = (formData: any) => {
-    const { adultsCount, childrenCount } = userData || {
+    const { adultsCount, childrenCount, seats } = userData || {
       adultsCount: 0,
       childrenCount: 0,
+      seats: [],
     };
 
     if (adultsCount === 0 && childrenCount === 0) {
@@ -36,9 +37,10 @@ const BookTicket = () => {
       data?.id || 0,
       formData.movieDate,
       adultsCount,
-      childrenCount
+      childrenCount,
+      seats
     );
-    navigate("/");
+    navigate("/seats");
   };
 
   console.log("Tickets: ", userData);
