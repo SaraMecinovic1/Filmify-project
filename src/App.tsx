@@ -18,6 +18,7 @@ import BookTicket from "./pages/Reservation/BookTicket";
 import Seats from "./pages/Reservation/BookSeats";
 import Book from "./pages/Reservation/Book";
 import SignUpToApp from "./pages/SignUpPage";
+import ReservationInfo from "./pages/InfoPage/ReservationInfo";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/tickets/:id" element={<BookTicket />} />
           <Route path="/seats" element={<Seats />} />
           <Route path="/book" element={<Book />} />
+          <Route path="/your-qr/:id" element={<ReservationInfo />} />
         </Routes>
         <Footer />
       </div>

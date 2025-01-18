@@ -68,20 +68,26 @@ export const SignUp = async (
 };
 
 export const SendBookDetails = async (userData: any, user: any) => {
-  const { data, error } = await supabase.from("reservation").insert([
-    {
-      movie_title: userData?.movieTitle,
-      movie_id: userData?.movieId,
-      date: userData?.date,
-      adults: userData?.adultsCount,
-      kids: userData?.childrenCount,
-      seats: userData?.seats,
-      email: user.email,
-    },
-  ]);
+  const { data, error } = await supabase
+    .from("reservation")
+    .insert([
+      {
+        movie_title: userData?.movieTitle,
+        movie_id: userData?.movieId,
+        date: userData?.date,
+        adults: userData?.adultsCount,
+        kids: userData?.childrenCount,
+        seats: userData?.seats,
+        email: user.email,
+      },
+    ])
+    .select("id")
+    .single();
 
   if (data) {
     console.log("Supabase data: ", data);
+    console.log("Created reservation ID: ", data.id);
+    return data.id;
   }
   if (error) {
     console.log("Error from SendBookDetails:", error.message);
