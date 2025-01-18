@@ -19,6 +19,11 @@ const Seats = () => {
     const totalTickets =
       (userData?.adultsCount || 0) + (userData?.childrenCount || 0);
 
+    if (selectedSeats.length > totalTickets) {
+      toast.error(`You cannot select more than ${totalTickets} seats.`);
+      return;
+    }
+
     if (selectedSeats.length !== totalTickets) {
       toast.error(`You need to select exactly ${totalTickets} seat/s.`);
       return;

@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Button } from "../../components/ui/button";
 import { toast } from "react-toastify";
-import { logOut } from "@/services/supabaseServices";
+import { LogOut } from "@/services/supabaseServices";
 import { FaHeart } from "react-icons/fa";
 
 const NavBar = () => {
@@ -27,7 +27,7 @@ const NavBar = () => {
   }, []);
 
   const handleLogout = async () => {
-    const isLoggedOut = await logOut();
+    const isLoggedOut = await LogOut();
     if (isLoggedOut) {
       localStorage.removeItem("user");
       setIsLoggedIn(false);

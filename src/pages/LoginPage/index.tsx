@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { logIn } from "@/services/supabaseServices";
+import { LogIn } from "@/services/supabaseServices";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address."),
@@ -30,7 +30,7 @@ const Login = () => {
 
     const { email, password } = data;
 
-    const loginIsValid = await logIn(email, password);
+    const loginIsValid = await LogIn(email, password);
 
     if (loginIsValid && loginIsValid.user) {
       localStorage.setItem("user", JSON.stringify(loginIsValid.user));

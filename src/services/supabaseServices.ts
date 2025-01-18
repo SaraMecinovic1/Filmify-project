@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import supabase from "@/config/supabase";
 
-export const logIn = async (email: string, password: string) => {
+export const LogIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -22,7 +22,7 @@ export const logIn = async (email: string, password: string) => {
   }
 };
 
-export const logOut = async () => {
+export const LogOut = async () => {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
@@ -34,7 +34,7 @@ export const logOut = async () => {
   return true;
 };
 
-export const signUp = async (
+export const SignUp = async (
   email: string,
   password: string,
   userData: {
@@ -61,6 +61,29 @@ export const signUp = async (
   }
 
   console.log("User successfully signed up:", data);
-  toast.success("User successfully signed up!");
+  toast.success(
+    "Successfully signed up!🎊. Please check your email and confirm it."
+  );
   return data;
+};
+
+export const SendBookDetails = async (userData: any, user: any) => {
+  const { data, error } = await supabase.from("reservation").insert([
+    {
+      movie_title: userData?.movieTitle,
+      movie_id: userData?.movieId,
+      date: userData?.date,
+      adults: userData?.adultsCount,
+      kids: userData?.childrenCount,
+      seats: userData?.seats,
+      email: user.email,
+    },
+  ]);
+
+  if (data) {
+    console.log("Supabase data: ", data);
+  }
+  if (error) {
+    console.log("Error from SendBookDetails:", error.message);
+  }
 };

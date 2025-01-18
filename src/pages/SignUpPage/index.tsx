@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signUp } from "../../services/supabaseServices";
+import { SignUp } from "../../services/supabaseServices";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { DateOfBirthPicker } from "@/component/InputsCard/CalendarForBirthday";
@@ -27,7 +27,7 @@ const formSchema = z.object({
   gender: z.string().nonempty("Please select a gender."),
 });
 
-function SignUp() {
+function SignUpToApp() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const {
@@ -44,7 +44,7 @@ function SignUp() {
     setIsSubmitting(true);
     const { email, password, name, lastname, birthDate, gender } = data;
 
-    const signUpIsValid = await signUp(email, password, {
+    const signUpIsValid = await SignUp(email, password, {
       name,
       lastname,
       birthDate,
@@ -196,4 +196,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default SignUpToApp;
