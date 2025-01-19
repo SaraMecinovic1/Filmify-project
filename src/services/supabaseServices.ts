@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import supabase from "@/config/supabase";
+import { useDataStore, UserBookDate } from "../store/dataStore";
 
 export const LogIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -68,9 +69,8 @@ export const SignUp = async (
 };
 
 export const SendBookDetails = async (userData: any, user: any) => {
-  const { data, error } = await supabase
-    .from("reservation")
-    .insert([
+  try {
+    const { data } = await supabase.from("reservation").insert([
       {
         movie_title: userData?.movieTitle,
         movie_id: userData?.movieId,
@@ -80,16 +80,12 @@ export const SendBookDetails = async (userData: any, user: any) => {
         seats: userData?.seats,
         email: user.email,
       },
-    ])
-    .select("id")
-    .single();
+    ]);
 
-  if (data) {
-    console.log("Supabase data: ", data);
-    console.log("Created reservation ID: ", data.id);
-    return data.id;
-  }
-  if (error) {
-    console.log("Error from SendBookDetails:", error.message);
+    console.log("Data returned from Supabase:", data);
+  } catch (error) {
+    console.error("Error during reservation submission:", error);
+    throw error;
   }
 };
+

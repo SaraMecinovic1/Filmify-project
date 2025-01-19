@@ -8,7 +8,6 @@ export default function Upcoming() {
     queryKey: ["upcomingMovies"],
     queryFn: fetchUpcomingMovies,
   });
-  console.log(data);
 
   if (isLoading) {
     return <Loader />;

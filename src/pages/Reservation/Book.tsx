@@ -22,7 +22,7 @@ const Book = () => {
       setReservationSent(true);
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
-      console.error(error);
+      console.error("Error during reservation submission:", error.message);
     } finally {
       setLoading(false);
     }
