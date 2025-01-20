@@ -17,8 +17,9 @@ const Book = () => {
   const onSubmit = async () => {
     try {
       setLoading(true);
-      await SendBookDetails(userData, user);
+      const reservationId = await SendBookDetails(userData, user);
       toast.success("The reservation has been successfully sent!🎊");
+      console.log("Reservation ID:", reservationId);
       setReservationSent(true);
     } catch (error) {
       toast.error("Something went wrong. Please try again.");

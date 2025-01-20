@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import supabase from "@/config/supabase";
-import { useDataStore, UserBookDate } from "../store/dataStore";
+import { v4 as uuidv4 } from "uuid";
 
 export const LogIn = async (email: string, password: string) => {
   const { data, error } = await supabase.auth.signInWithPassword({
@@ -70,8 +70,10 @@ export const SignUp = async (
 
 export const SendBookDetails = async (userData: any, user: any) => {
   try {
-    const { data } = await supabase.from("reservation").insert([
+    const id = uuidv4(); // Generišemo jedinstveni ID pre umetanja
+    const { error } = await supabase.from("reservation").insert([
       {
+        id,
         movie_title: userData?.movieTitle,
         movie_id: userData?.movieId,
         date: userData?.date,
@@ -82,10 +84,15 @@ export const SendBookDetails = async (userData: any, user: any) => {
       },
     ]);
 
-    console.log("Data returned from Supabase:", data);
+    if (error) {
+      console.error("Error inserting data:", error);
+      throw error;
+    }
+
+    console.log("Data inserted successfully with ID:", id);
+    return id; // Vraćamo ID
   } catch (error) {
     console.error("Error during reservation submission:", error);
     throw error;
   }
 };
-

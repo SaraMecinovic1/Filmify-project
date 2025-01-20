@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 import { create } from "zustand";
 
 export interface UserBookDate {
-  id: string;
   movieTitle: string;
   movieId: number;
   date: string;
@@ -17,7 +16,6 @@ interface BookProps {
   setUser: (userData: UserBookDate | null) => void;
   setLoading: (loading: boolean) => void;
   newData: (
-    id: string,
     movieTitle: string,
     movieId: number,
     date: string,
@@ -39,10 +37,9 @@ export const useDataStore = create<BookProps>((set) => ({
 
   setLoading: (loading) => set({ loading }),
 
-  newData: (movieTitle, movieId, date, adultsCount, childrenCount, seats, id) =>
+  newData: (movieTitle, movieId, date, adultsCount, childrenCount, seats) =>
     set({
       userData: {
-        id,
         movieTitle,
         movieId,
         date,
