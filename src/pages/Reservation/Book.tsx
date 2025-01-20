@@ -5,11 +5,13 @@ import { useAuthStore } from "@/store/authStore";
 import { useDataStore } from "@/store/dataStore";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import QRCodeGenerator from "@/component/QrCode";
 
 const Book = () => {
   const { user } = useAuthStore();
   const { userData, loading, setLoading } = useDataStore();
   const [reservationSent, setReservationSent] = useState(false);
+  const [reservationId, setReservationId] = useState<string>("");
 
   const totalTickets =
     (userData?.adultsCount || 0) + (userData?.childrenCount || 0);
@@ -17,10 +19,11 @@ const Book = () => {
   const onSubmit = async () => {
     try {
       setLoading(true);
-      const reservationId = await SendBookDetails(userData, user);
+      const id = await SendBookDetails(userData, user);
       toast.success("The reservation has been successfully sent!🎊");
-      console.log("Reservation ID:", reservationId);
+      console.log("Reservation ID:", id);
       setReservationSent(true);
+      setReservationId(id); // Postavi reservationId
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
       console.error("Error during reservation submission:", error.message);
@@ -82,6 +85,11 @@ const Book = () => {
               : "SEND RESERVATION"}
           </Button>
         </div>
+
+        {/* Prikazivanje QR koda ako je rezervacija poslata */}
+        {reservationSent && reservationId && (
+          <QRCodeGenerator reservationId={reservationId} />
+        )}
       </div>
     </div>
   );
