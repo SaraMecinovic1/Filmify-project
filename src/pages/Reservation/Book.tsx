@@ -23,7 +23,7 @@ const Book = () => {
       toast.success("The reservation has been successfully sent!🎊");
       console.log("Reservation ID:", id);
       setReservationSent(true);
-      setReservationId(id); // Postavi reservationId
+      setReservationId(id);
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
       console.error("Error during reservation submission:", error.message);

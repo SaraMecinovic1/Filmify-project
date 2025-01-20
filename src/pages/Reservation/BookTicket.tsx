@@ -14,11 +14,25 @@ import { toast } from "react-toastify";
 const BookTicket = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    // setValue,
+  } = useForm({
+    defaultValues: {
+      movieDate: "",
+      adultsCount: 0, // Default value for adults count
+      childrenCount: 0, // Default value for children count
+    },
+    mode: "onBlur",
+  });
+
   const { data, isLoading } = useQuery<Movie>({
     queryKey: ["movieDetails", id],
     queryFn: () => fetchMovieDetails(Number(id)),
   });
+
   const { newData, addTicket, removeTicket, userData } = useDataStore();
 
   const onSubmit = (formData: any) => {
@@ -28,10 +42,16 @@ const BookTicket = () => {
       seats: [],
     };
 
-    if (adultsCount === 0 && childrenCount === 0) {
-      toast.error("Please select a movie date and at least one ticket!");
+    if (!formData.movieDate) {
+      toast.error("Please select a movie date!");
       return;
     }
+
+    if (adultsCount === 0 && childrenCount === 0) {
+      toast.error("Please select at least one ticket!");
+      return;
+    }
+
     newData(
       data?.title || "",
       data?.id || 0,
@@ -43,12 +63,8 @@ const BookTicket = () => {
     navigate("/seats");
   };
 
-  console.log("Tickets: ", userData);
   return (
-    <div
-      className="w-full h-full
-     px-4 sm:px-6 lg:px-10"
-    >
+    <div className="w-full h-full px-4 sm:px-6 lg:px-10">
       <Stepper />
       {isLoading ? (
         <Loader />
@@ -75,7 +91,7 @@ const BookTicket = () => {
                 <Controller
                   name="movieDate"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: "Please select a movie date" }}
                   render={({ field }) => (
                     <SelectForMoviedate
                       {...field}
@@ -85,6 +101,11 @@ const BookTicket = () => {
                     />
                   )}
                 />
+                {errors.movieDate && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.movieDate.message}
+                  </p>
+                )}
               </div>
 
               <div className="w-full mt-4 text-accent">
@@ -107,6 +128,12 @@ const BookTicket = () => {
                   </div>
                 </div>
 
+                {userData?.adultsCount === 0 && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.adultsCount?.message}
+                  </p>
+                )}
+
                 <hr className="w-full mb-3 border-gray-600" />
 
                 <div className="flex justify-between items-center mb-3">
@@ -125,6 +152,19 @@ const BookTicket = () => {
                     />
                   </div>
                 </div>
+
+                {errors.childrenCount && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.childrenCount?.message}
+                  </p>
+                )}
+
+                {userData?.adultsCount === 0 &&
+                  userData?.childrenCount === 0 && (
+                    <p className="text-red-500 text-xs mt-1">
+                      Please select at least one ticket (adult or child).
+                    </p>
+                  )}
 
                 <hr className="w-full mb-3 border-gray-600" />
 

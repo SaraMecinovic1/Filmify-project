@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "react-toastify";
 import supabase from "@/config/supabase";
 import { v4 as uuidv4 } from "uuid";
@@ -90,9 +91,38 @@ export const SendBookDetails = async (userData: any, user: any) => {
     }
 
     console.log("Data inserted successfully with ID:", id);
-    return id; // Vraćamo ID
+    return id;
   } catch (error) {
     console.error("Error during reservation submission:", error);
     throw error;
+  }
+};
+
+export const fetchReservationById = async (id: string) => {
+  try {
+    console.log("Searching for ID:", id);
+    const { data, error, count } = await supabase
+      .from("reservation")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    console.log("SUPA BASE", data);
+    if (!data || data.length === 0) {
+      throw new Error("Reservation not found");
+    }
+
+    if (count !== null && count > 1) {
+      throw new Error("Multiple reservations found with the same ID");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching reservation:", error);
+    return null;
   }
 };
