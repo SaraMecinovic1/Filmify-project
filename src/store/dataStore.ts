@@ -60,14 +60,23 @@ export const useDataStore = create<BookProps>((set) => ({
         : null,
     })),
 
-  getSelectedSeats: () => {
+  getSelectedSeats: (): string[] => {
     const userData = useDataStore.getState().userData;
     return userData ? userData.seats : [];
   },
 
   addTicket: (type) => {
     set((state) => {
-      const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
+      // const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
+      const userData: UserBookDate = state.userData || {
+        movieTitle: "",
+        movieId: 0,
+        date: "",
+        adultsCount: 0,
+        childrenCount: 0,
+        seats: [],
+      };
+
       const totalTickets = userData.adultsCount + userData.childrenCount;
 
       if (totalTickets >= 6) {
@@ -97,7 +106,16 @@ export const useDataStore = create<BookProps>((set) => ({
 
   removeTicket: (type) => {
     set((state) => {
-      const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
+      // const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
+
+      const userData: UserBookDate = state.userData || {
+        movieTitle: "",
+        movieId: 0,
+        date: "",
+        adultsCount: 0,
+        childrenCount: 0,
+        seats: [],
+      };
 
       if (type === "adults" && userData.adultsCount > 0) {
         return {
