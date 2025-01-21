@@ -67,7 +67,6 @@ export const useDataStore = create<BookProps>((set) => ({
 
   addTicket: (type) => {
     set((state) => {
-      // const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
       const userData: UserBookDate = state.userData || {
         movieTitle: "",
         movieId: 0,
@@ -106,8 +105,6 @@ export const useDataStore = create<BookProps>((set) => ({
 
   removeTicket: (type) => {
     set((state) => {
-      // const userData = state.userData || { adultsCount: 0, childrenCount: 0 };
-
       const userData: UserBookDate = state.userData || {
         movieTitle: "",
         movieId: 0,
