@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <div className="w-full mt-10 mb-8 p-10 bg-[#2e2e2e] grid grid-cols-2 sm:grid-cols-2  md:grid-cols-4 gap-6">
+    <div className="w-full mt-10 mb-0 p-10 bg-[#2e2e2e] grid grid-cols-2 sm:grid-cols-2  md:grid-cols-4 gap-6">
       <div className="w-full h-full flex items-center ml-5">
         <Link to="/" className="text-secondary text-5xl font-bebas">
           FILMIFY

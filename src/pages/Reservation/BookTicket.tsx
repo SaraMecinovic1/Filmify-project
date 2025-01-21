@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Loader from "@/component/loading";
 import { SelectForMoviedate } from "@/component/SelectForMovieDate";
 import Stepper from "@/component/Stepper";
@@ -14,26 +15,25 @@ import { toast } from "react-toastify";
 const BookTicket = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    // setValue,
-  } = useForm({
-    defaultValues: {
-      movieDate: "",
-      adultsCount: 0, // Default value for adults count
-      childrenCount: 0, // Default value for children count
-    },
-    mode: "onBlur",
-  });
-
   const { data, isLoading } = useQuery<Movie>({
     queryKey: ["movieDetails", id],
     queryFn: () => fetchMovieDetails(Number(id)),
   });
 
   const { newData, addTicket, removeTicket, userData } = useDataStore();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      movieDate: "",
+      adultsCount: 0,
+      childrenCount: 0,
+    },
+    mode: "onBlur",
+  });
 
   const onSubmit = (formData: any) => {
     const { adultsCount, childrenCount, seats } = userData || {
@@ -42,13 +42,13 @@ const BookTicket = () => {
       seats: [],
     };
 
-    if (!formData.movieDate) {
-      toast.error("Please select a movie date!");
+    if (adultsCount === 0 && childrenCount === 0) {
+      toast.error("Please select at least one ticket!");
       return;
     }
 
-    if (adultsCount === 0 && childrenCount === 0) {
-      toast.error("Please select at least one ticket!");
+    if (!formData.movieDate) {
+      toast.error("Please select a movie date!");
       return;
     }
 
@@ -69,7 +69,7 @@ const BookTicket = () => {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="w-full h-auto sm:h-auto lg-[70vh] mb-5 sm:mb-20 p-5 sm:p-7 rounded-lg bg-[#2e2e2e] flex flex-col sm:flex-row gap-5">
+        <div className="w-full h-auto sm:h-auto lg:[70vh] mb-5 sm:mb-20 p-5 sm:p-7 rounded-lg bg-[#2e2e2e] flex flex-col sm:flex-row gap-5">
           <div className="w-full sm:w-[300px] max-w-sm mx-auto sm:mx-0 rounded-lg">
             <img
               src={`https://image.tmdb.org/t/p/w400/${data?.poster_path}`}
@@ -101,12 +101,12 @@ const BookTicket = () => {
                     />
                   )}
                 />
-                {errors.movieDate && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.movieDate.message}
-                  </p>
-                )}
               </div>
+              {errors.movieDate && (
+                <p className="text-red-500 text-center text-xs mt-2 ">
+                  Please select a movie date.
+                </p>
+              )}
 
               <div className="w-full mt-4 text-accent">
                 <hr className="w-full mb-3 border-gray-600" />
@@ -128,12 +128,6 @@ const BookTicket = () => {
                   </div>
                 </div>
 
-                {userData?.adultsCount === 0 && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.adultsCount?.message}
-                  </p>
-                )}
-
                 <hr className="w-full mb-3 border-gray-600" />
 
                 <div className="flex justify-between items-center mb-3">
@@ -152,19 +146,6 @@ const BookTicket = () => {
                     />
                   </div>
                 </div>
-
-                {errors.childrenCount && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.childrenCount?.message}
-                  </p>
-                )}
-
-                {userData?.adultsCount === 0 &&
-                  userData?.childrenCount === 0 && (
-                    <p className="text-red-500 text-xs mt-1">
-                      Please select at least one ticket (adult or child).
-                    </p>
-                  )}
 
                 <hr className="w-full mb-3 border-gray-600" />
 
