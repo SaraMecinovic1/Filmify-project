@@ -90,7 +90,6 @@ export const SendBookDetails = async (userData: any, user: any) => {
       throw error;
     }
 
-    console.log("Data inserted successfully with ID:", id);
     return id;
   } catch (error) {
     console.error("Error during reservation submission:", error);
@@ -100,7 +99,6 @@ export const SendBookDetails = async (userData: any, user: any) => {
 
 export const fetchReservationById = async (id: string) => {
   try {
-    console.log("Searching for ID:", id);
     const { data, error, count } = await supabase
       .from("reservation")
       .select("*")
@@ -111,7 +109,6 @@ export const fetchReservationById = async (id: string) => {
       throw error;
     }
 
-    console.log("SUPA BASE", data);
     if (!data || data.length === 0) {
       throw new Error("Reservation not found");
     }

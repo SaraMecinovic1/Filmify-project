@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import CinemaPic from "../../assets/cinema.jpg";
 import { Button } from "@/components/ui/button";
@@ -55,7 +56,6 @@ function SignUpToApp() {
 
     if (signUpIsValid) {
       navigate("/login");
-      console.log("Signup is valid:", signUpIsValid);
     }
   };
 
@@ -82,8 +82,8 @@ function SignUpToApp() {
                   {...register("name")}
                 />
                 {errors.name && (
-                  <p className="text-red-500">
-                    {String(errors?.lastname?.message)}
+                  <p className="text-red-500 text-sm mt-2">
+                    {String(errors?.name?.message)}
                   </p>
                 )}
               </div>
@@ -99,7 +99,7 @@ function SignUpToApp() {
                   {...register("lastname")}
                 />
                 {errors.lastname && (
-                  <p className="text-red-500">
+                  <p className="text-red-500 text-sm mt-2">
                     {errors.lastname.message?.toString()}
                   </p>
                 )}
@@ -150,7 +150,7 @@ function SignUpToApp() {
                   {...register("email")}
                 />
                 {errors.email && (
-                  <p className="text-red-500">
+                  <p className="text-red-500 text-sm mt-2">
                     {errors.email.message?.toString()}
                   </p>
                 )}
@@ -167,7 +167,7 @@ function SignUpToApp() {
                   {...register("password")}
                 />
                 {errors.password && (
-                  <p className="text-red-500">
+                  <p className="text-red-500 text-sm mt-2">
                     {errors.password.message?.toString()}
                   </p>
                 )}

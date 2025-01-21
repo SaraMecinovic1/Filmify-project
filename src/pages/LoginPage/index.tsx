@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CinemaPic from "../../assets/cinema.jpg";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,6 @@ const Login = () => {
     if (loginIsValid && loginIsValid.user) {
       localStorage.setItem("user", JSON.stringify(loginIsValid.user));
       navigate("/");
-      console.log("Successful login", loginIsValid);
       reset();
     }
 

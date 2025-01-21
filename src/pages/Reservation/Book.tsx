@@ -21,12 +21,11 @@ const Book = () => {
       setLoading(true);
       const id = await SendBookDetails(userData, user);
       toast.success("The reservation has been successfully sent!🎊");
-      console.log("Reservation ID:", id);
       setReservationSent(true);
       setReservationId(id);
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
-      console.error("Error during reservation submission:", error.message);
+      console.error("Error during reservation submission:", error);
     } finally {
       setLoading(false);
     }

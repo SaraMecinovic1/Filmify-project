@@ -84,7 +84,7 @@ const ReservationInfo = () => {
             <p className="text-lg text-textColor">
               Time:
               <span className="font-semibold ml-2 italic text-lg text-white">
-                {data.time}
+                19:00 pm
               </span>
             </p>
             <p className="text-lg text-textColor">
@@ -96,10 +96,12 @@ const ReservationInfo = () => {
           </div>
         </div>
       </div>
-      <p className="font-normal text-center  text-md md:text-lg lg:text-xl mt-7">
-        Please present the QR code or your unique reservation ID at the counter
-        to collect your tickets.
-      </p>
+      <div className="w-auto">
+        <p className="font-normal text-sm text-center sm:text-md md:text-lg lg:text-lg mt-7">
+          Please present the QR code or your unique reservation ID at the
+          counter to collect your tickets.
+        </p>
+      </div>
     </div>
   );
 };
