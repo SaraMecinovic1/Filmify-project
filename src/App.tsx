@@ -19,6 +19,7 @@ import Seats from "./pages/Reservation/BookSeats";
 import Book from "./pages/Reservation/Book";
 import SignUpToApp from "./pages/SignUpPage";
 import ReservationInfo from "./pages/InfoPage/ReservationInfo";
+import FarisUi from "./component/FarisUi";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/seats" element={<Seats />} />
           <Route path="/book" element={<Book />} />
           <Route path="/your-qr/:id" element={<ReservationInfo />} />
+          <Route path="ui" element={<FarisUi />} />
         </Routes>
         <Footer />
       </div>
