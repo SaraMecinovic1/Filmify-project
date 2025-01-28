@@ -3,9 +3,9 @@ import Image from "../assets/peakpx.jpg";
 
 const FarisUi = () => {
   return (
-    <div className="w-[450px] h-[450px] bg-red-300 mt-[120px]">
+    <div className="w-[450px] h-[450px] mt-[120px]">
       {/* Komponenta */}
-      <div className="max-w-md h-[100px] m-5 flex items-center bg-[#222222]">
+      <div className="max-w-md h-[100px] m-5 flex items-center bg-[#222222] bg-opacity-0">
         {/* Slika */}
         <div className="w-[130px] h-full mr-4">
           <img
