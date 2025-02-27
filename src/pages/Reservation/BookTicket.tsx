@@ -97,7 +97,6 @@ const BookTicket = () => {
                       {...field}
                       control={control}
                       onBlur={field.onBlur}
-                      ref={field.ref}
                     />
                   )}
                 />

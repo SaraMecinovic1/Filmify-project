@@ -14,14 +14,12 @@ interface SelectForMovieDateProps {
   control: Control<any>;
   name: string;
   onBlur: () => void;
-  ref: React.Ref<any>;
 }
 
 export function SelectForMoviedate({
   control,
   name,
   onBlur,
-  ref,
 }: SelectForMovieDateProps) {
   const randomDates = generateDatesEveryOtherDay(4);
 
@@ -32,7 +30,6 @@ export function SelectForMoviedate({
       render={({ field }) => (
         <Select onValueChange={field.onChange} value={field.value}>
           <SelectTrigger
-            ref={ref}
             onBlur={onBlur}
             className="w-[135px] sm:w-[135px] flex-row rounded-3xl pl-4  text-accent placeholder:text-accent"
           >

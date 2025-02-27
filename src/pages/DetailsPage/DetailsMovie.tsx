@@ -128,10 +128,9 @@ export default function DetailsMovie() {
                   control={control}
                   render={({ field }) => (
                     <SelectForMoviedate
-                      {...field}
                       control={control}
+                      name={field.name}
                       onBlur={field.onBlur}
-                      ref={field.ref}
                     />
                   )}
                 />

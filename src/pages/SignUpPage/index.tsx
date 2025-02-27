@@ -18,8 +18,8 @@ const formSchema = z.object({
     .max(20, "Name must not be longer than 20 characters."),
   lastname: z
     .string()
-    .min(3, "Lastname is required.")
-    .max(25, "Lastname must not be longer than 25 characters."),
+    .min(3, "Last name is required.")
+    .max(25, "Last name must not be longer than 25 characters."),
   email: z.string().email("Please enter a valid email address."),
   password: z.string().min(6, "Password must have at least 6 characters"),
   birthDate: z
@@ -90,7 +90,7 @@ function SignUpToApp() {
 
               <div>
                 <p className="text-left pl-3 text-sm font-medium text-textColor">
-                  Lastname
+                  Last name
                 </p>
                 <Input
                   className="w-full sm:w-[270px] rounded-2xl pl-5 mt-2"
