@@ -61,7 +61,7 @@ function SignUpToApp() {
 
   return (
     <div
-      className="w-full h-[100vh] bg-cover bg-center flex justify-center pt-[100px]"
+      className="w-full h-[120vh] bg-cover bg-center flex justify-center pt-[100px]"
       style={{ backgroundImage: `url(${CinemaPic})` }}
     >
       <div className="w-[650px] h-full p-7 text-center">
